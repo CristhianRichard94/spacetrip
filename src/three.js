@@ -1,15 +1,16 @@
-import * as THREE from 'three';
-import * as lil from 'lil-gui';
+import * as THREE from "three";
+import * as lil from "lil-gui";
 
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
 THREE.ColorManagement.enabled = false;
 
-const canvas = document.querySelector('.webgl');
+const canvas = document.querySelector(".webgl");
 const gui = new lil.GUI();
+gui.hide();
 const textureLoader = new THREE.TextureLoader();
-const toonMaterialTexture = textureLoader.load('/textures/gradients/3.jpg');
-const moonMapTexture = textureLoader.load('/textures/lroc_color_poles_1k.jpg');
+const toonMaterialTexture = textureLoader.load("/textures/gradients/3.jpg");
+const moonMapTexture = textureLoader.load("/textures/lroc_color_poles_1k.jpg");
 toonMaterialTexture.magFilter = THREE.NearestFilter;
 const sizes = {
   width: window.innerWidth,
@@ -33,7 +34,7 @@ const positions = new Float32Array(count * 3);
 for (let index = 0; index < count * 3; index++) {
   const i3 = index * 3;
   positions[i3] = (Math.random() - 0.5) * 20;
-  positions[i3 + 1] = (Math.random() - 0.5) * 50;
+  positions[i3 + 1] = (Math.random() - 0.5) * 100;
   positions[i3 + 2] = (Math.random() - 0.5) * 20;
 }
 const count2 = 5000;
@@ -41,11 +42,11 @@ const positions2 = new Float32Array(count2 * 3);
 for (let index = 0; index < count2 * 3; index++) {
   const i3 = index * 3;
   positions2[i3] = (Math.random() - 0.5) * 20;
-  positions2[i3 + 1] = (Math.random() - 0.5) * 50;
+  positions2[i3 + 1] = (Math.random() - 0.5) * 100;
   positions2[i3 + 2] = (Math.random() - 0.5) * 20;
 }
 particlesGeometry.setAttribute(
-  'position',
+  "position",
   new THREE.BufferAttribute(positions, 3)
 );
 
@@ -57,7 +58,7 @@ const sphereMaterial = new THREE.PointsMaterial({
 const sphere = new THREE.Points(sphereGeometry, sphereMaterial);
 sphere.position.set(0, 0, -3);
 sphereGeometry.setAttribute(
-  'position',
+  "position",
   new THREE.BufferAttribute(positions2, 3)
 );
 scene.add(sphere);
@@ -119,7 +120,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 // Controls
 // const controls = new OrbitControls(camera, canvas);
 
-window.addEventListener('resize', () => {
+window.addEventListener("resize", () => {
   sizes.width = window.innerWidth;
   sizes.height = window.innerHeight;
 
@@ -136,13 +137,13 @@ const cursor = {
   y: 0,
 };
 
-window.addEventListener('mousemove', (event) => {
+window.addEventListener("mousemove", (event) => {
   cursor.x = event.clientX / sizes.width - 0.5;
   cursor.y = event.clientY / sizes.height - 0.5;
 });
 
 let { scrollY } = window;
-window.addEventListener('scroll', (event) => {
+window.addEventListener("scroll", (event) => {
   scrollY = window.scrollY;
 });
 

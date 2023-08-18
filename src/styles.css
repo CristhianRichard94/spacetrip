@@ -5,7 +5,7 @@ html {
   background-color: #0a2342;
   color: #fafafa;
   margin: 0;
-  font-family: 'Next Sphere', sans-serif;
+  font-family: "SinMedia Sans", sans-serif;
 }
 
 .webgl {
@@ -14,6 +14,7 @@ html {
   left: 0;
   width: 100%;
   height: 100%;
+  z-index: -1;
 }
 
 .main-section {
@@ -23,6 +24,23 @@ html {
   justify-content: center;
   align-items: center;
 }
+
+.align-left {
+  align-items: flex-start;
+  flex-direction: column;
+  margin-left: 10vw;
+}
+
+.align-right {
+  align-items: flex-end;
+  flex-direction: column;
+  margin-right: 10vw;
+}
+
+p,
+li {
+  max-width: 300px;
+}
 .youtube-player__container {
   position: absolute;
   top: 15px;
@@ -31,15 +49,38 @@ html {
 
 h1 {
   font-size: 64px;
+  z-index: 1;
 }
-
+p {
+  z-index: 1;
+}
 .footnote {
-  font-size: 10px;
+  font-size: 14px;
   position: fixed;
   bottom: 15px;
   right: 30px;
 }
 
 .hint {
-  font-size: 10px;
+  font-size: 14px;
+}
+
+.social-media {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  padding: 30px;
+  background-color: #ffffff66;
+  border-radius: 20px;
+  width: auto;
+  gap: 0 30px;
+}
+
+.social-media img {
+  width: 15vw;
+  filter: brightness(0);
+}
+
+a {
+  color: #3b6fff;
 }
