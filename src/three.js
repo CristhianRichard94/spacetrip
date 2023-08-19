@@ -33,17 +33,17 @@ const count = 5000;
 const positions = new Float32Array(count * 3);
 for (let index = 0; index < count * 3; index++) {
   const i3 = index * 3;
-  positions[i3] = (Math.random() - 0.5) * 20;
+  positions[i3] = (Math.random() - 0.5) * 100;
   positions[i3 + 1] = (Math.random() - 0.5) * 100;
-  positions[i3 + 2] = (Math.random() - 0.5) * 20;
+  positions[i3 + 2] = (Math.random() - 0.5) * 100;
 }
 const count2 = 5000;
 const positions2 = new Float32Array(count2 * 3);
 for (let index = 0; index < count2 * 3; index++) {
   const i3 = index * 3;
-  positions2[i3] = (Math.random() - 0.5) * 20;
+  positions2[i3] = (Math.random() - 0.5) * 100;
   positions2[i3 + 1] = (Math.random() - 0.5) * 100;
-  positions2[i3 + 2] = (Math.random() - 0.5) * 20;
+  positions2[i3 + 2] = (Math.random() - 0.5) * 100;
 }
 particlesGeometry.setAttribute(
   "position",

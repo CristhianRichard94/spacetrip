@@ -21,6 +21,7 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 20px;
 }
 
 .align-left {
@@ -72,10 +73,12 @@ p {
   border-radius: 20px;
   width: auto;
   gap: 0 30px;
+  align-self: center;
 }
 
 .social-media img {
-  width: 15vw;
+  max-width: 15vw;
+  max-height: 15vh;
   filter: brightness(0);
 }
 
