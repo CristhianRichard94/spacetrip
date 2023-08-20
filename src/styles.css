@@ -48,9 +48,11 @@ li {
 
 h1 {
   font-size: 64px;
-  z-index: 1;
 }
-p {
+h1,
+p,
+ul,
+li {
   z-index: 1;
 }
 .footnote {

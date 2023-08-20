@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import * as lil from "lil-gui";
 
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import gsap from "gsap";
 
 THREE.ColorManagement.enabled = false;
 
@@ -23,7 +23,7 @@ const scene = new THREE.Scene();
  */
 const particlesGeometry = new THREE.BufferGeometry();
 const particlesMaterial = new THREE.PointsMaterial({
-  size: 0.02,
+  size: 0.04,
   color: 0xccccff,
 });
 const particles = new THREE.Points(particlesGeometry, particlesMaterial);
@@ -50,43 +50,65 @@ particlesGeometry.setAttribute(
   new THREE.BufferAttribute(positions, 3)
 );
 
-const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 32);
-const sphereMaterial = new THREE.PointsMaterial({
-  size: 0.04,
+const particles2Geometry = new THREE.SphereGeometry(0.5, 32, 32);
+const particles2Material = new THREE.PointsMaterial({
+  size: 0.05,
   color: 0xffccff,
 });
-const sphere = new THREE.Points(sphereGeometry, sphereMaterial);
-sphere.position.set(0, 0, -3);
-sphereGeometry.setAttribute(
+const particles2 = new THREE.Points(particles2Geometry, particles2Material);
+particles2.position.set(0, 0, -3);
+particles2Geometry.setAttribute(
   "position",
   new THREE.BufferAttribute(positions2, 3)
 );
-scene.add(sphere);
-const objectsDistance = 6;
+scene.add(particles2);
+const objectsDistance = 4;
 
 /**
  * Objects
  */
+const sectionMeshes = [];
 const torusGeometry = new THREE.TorusGeometry(1, 0.4, 32, 32);
 const SphereGeometry2 = new THREE.SphereGeometry(1, 32, 32);
 const toonMaterial = new THREE.MeshToonMaterial({
   gradientMap: toonMaterialTexture,
 });
 const torus = new THREE.Mesh(torusGeometry, toonMaterial);
-torus.position.z = -15;
-scene.add(torus);
-const sphere2 = new THREE.Mesh(SphereGeometry2, toonMaterial);
-sphere2.position.z = -15;
-scene.add(sphere2);
+
+const sphere = new THREE.Mesh(SphereGeometry2, toonMaterial);
+sphere.position.z = -15;
+
 const moonGeometry = new THREE.SphereGeometry(0.5, 32, 32);
 const moonMaterial = new THREE.MeshMatcapMaterial({
   map: moonMapTexture,
-  // displacementMap: moonDisplacementTexture,
   color: 0xfafafa,
 });
 const moon = new THREE.Mesh(moonGeometry, moonMaterial);
-moon.position.set(5, -15, -25);
-scene.add(moon);
+moon.position.set(5, -15, -10);
+
+const cone = new THREE.Mesh(new THREE.ConeGeometry(0.5, 1), toonMaterial);
+const torusKnot = new THREE.Mesh(
+  new THREE.TorusKnotGeometry(1.2, 0.5),
+  toonMaterial
+);
+cone.position.x = 0;
+cone.position.z = -10;
+sphere.position.x = 5;
+sphere.position.z = -10;
+torusKnot.position.x = 6;
+torusKnot.position.z = -10;
+torus.position.x = 3;
+torus.position.z = -10;
+moon.position.x = -0.5;
+
+sectionMeshes.push(torus, sphere, cone, torusKnot, moon);
+scene.add(cone, sphere, torusKnot, torus, torusKnot, moon);
+
+sectionMeshes.forEach(
+  (mesh, index) => (mesh.position.y = -objectsDistance * index * 2)
+);
+
+torus.position.y = -3;
 /**
  * Camera
  */
@@ -143,8 +165,19 @@ window.addEventListener("mousemove", (event) => {
 });
 
 let { scrollY } = window;
+let currentSection,
+  previousSection = 0;
 window.addEventListener("scroll", (event) => {
   scrollY = window.scrollY;
+  currentSection = Math.round(scrollY / sizes.height);
+  if (currentSection !== previousSection) {
+    previousSection = currentSection;
+
+    gsap.to(sectionMeshes[currentSection].rotation, {
+      x: "+=6",
+      z: "+=4",
+    });
+  }
 });
 
 const clock = new THREE.Clock();
@@ -157,13 +190,11 @@ const tick = () => {
   const deltaTime = elapsedTime - previousTime;
   previousTime = elapsedTime;
   particles.rotation.z = elapsedTime * 0.05;
-  torus.position.x = -Math.sin(elapsedTime * 0.1) * 10;
-  torus.position.y = -10 - Math.cos(elapsedTime * 0.1) * 10;
-  torus.position.z = -Math.sin(elapsedTime * 0.1) * 10;
 
-  sphere2.position.x = Math.sin(elapsedTime * 0.1) * 5;
-  sphere2.position.y = -10 - Math.cos(elapsedTime * 0.1) * 5;
-  sphere2.position.z = -15 - Math.sin(elapsedTime * 0.1) * 5;
+  sectionMeshes.forEach((mesh, index) => {
+    mesh.rotation.x = elapsedTime * 0.3;
+    mesh.rotation.z = elapsedTime * 0.2;
+  });
 
   camera.position.y = (-scrollY / sizes.height) * objectsDistance;
   // Parallax
