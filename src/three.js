@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import * as lil from "lil-gui";
-
+import "./texts.js";
 import gsap from "gsap";
 
 THREE.ColorManagement.enabled = false;
@@ -179,6 +179,9 @@ window.addEventListener("scroll", (event) => {
     });
   }
 });
+
+
+
 
 const clock = new THREE.Clock();
 let previousTime = 0;
