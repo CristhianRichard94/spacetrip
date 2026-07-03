@@ -122,9 +122,19 @@ html {
   scroll-margin-top: 70px;
 }
 
+.text {
+  background: #ffffff0d;
+  border: 1px solid #ffffff1a;
+  border-radius: 16px;
+  padding: 28px 32px;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
 details summary {
   cursor: pointer;
   font-size: 20px;
+  font-weight: 600;
   margin-bottom: 10px;
 }
 
@@ -151,7 +161,20 @@ details summary::marker {
 
 p,
 li {
-  max-width: 300px;
+  max-width: 420px;
+  line-height: 1.6;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+li li {
+  list-style: circle;
+}
+
+li + li {
+  margin-top: 4px;
 }
 .youtube-player__container {
   position: absolute;
@@ -160,7 +183,9 @@ li {
 }
 
 h1 {
-  font-size: 64px;
+  font-size: 48px;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
 }
 h1,
 p,
@@ -183,17 +208,18 @@ li {
   display: flex;
   justify-content: space-between;
   list-style: none;
+  margin: 0;
   padding: 30px;
   background-color: #ffffff66;
   border-radius: 20px;
   width: auto;
   gap: 0 30px;
-  align-self: center;
+  align-self: flex-start;
 }
 
 .social-media img {
-  max-width: 15vw;
-  max-height: 15vh;
+  max-width: 48px;
+  max-height: 48px;
   filter: brightness(0);
   transition: filter 0.3s ease, transform 0.3s ease;
 }
