@@ -61,16 +61,44 @@ html {
 }
 
 .music-player {
-  position: fixed;
-  top: 64px;
-  left: 20px;
-  z-index: 1;
-  opacity: 0.1;
-  width: 50px;
-  transition: opacity 0.3s ease;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
-.music-player:hover {
+.music-toggle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #3b6fff;
+  background: #0a2342cc;
+  color: #fafafa;
+  font-size: 16px;
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+}
+
+.music-toggle:hover {
+  background: #3b6fff;
+}
+
+.music-tooltip {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: max-content;
+  max-width: 220px;
+  padding: 8px 12px;
+  background: #0a2342f0;
+  border: 1px solid #3b6fff;
+  border-radius: 8px;
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.music-tooltip.show {
   opacity: 1;
 }
 
@@ -80,6 +108,8 @@ html {
   left: 0;
   width: 100%;
   height: 100%;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .main-section {
@@ -106,6 +136,11 @@ details summary::marker {
   align-items: flex-start;
   flex-direction: column;
   margin-left: 10vw;
+}
+
+#portfolio-section {
+  justify-content: flex-start;
+  padding-top: 15vh;
 }
 
 .align-right {
@@ -160,8 +195,33 @@ li {
   max-width: 15vw;
   max-height: 15vh;
   filter: brightness(0);
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+
+.social-media img:hover {
+  transform: scale(1.15);
+}
+
+.social-media img[src*="instagram"]:hover {
+  /* instagram pink */
+  filter: brightness(0) saturate(100%) invert(28%) sepia(54%) saturate(4500%) hue-rotate(325deg);
+}
+
+.social-media img[src*="linkedin"]:hover {
+  /* linkedin blue */
+  filter: brightness(0) saturate(100%) invert(28%) sepia(94%) saturate(1800%) hue-rotate(180deg);
+}
+
+.social-media img[src*="github"]:hover {
+  /* github dark grey */
+  filter: brightness(0) saturate(100%) invert(20%);
 }
 
 a {
   color: #3b6fff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }

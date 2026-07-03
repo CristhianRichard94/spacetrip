@@ -90,11 +90,11 @@ const torusKnot = new THREE.Mesh(
   new THREE.TorusKnotGeometry(1.2, 0.5),
   toonMaterial
 );
-cone.position.x = 0;
-cone.position.z = -10;
-sphere.position.x = 5;
+cone.position.x = 3;
+cone.position.z = -15;
+sphere.position.x = -1;
 sphere.position.z = -10;
-torusKnot.position.x = 6;
+torusKnot.position.x = 2;
 torusKnot.position.z = -10;
 torus.position.x = 3;
 torus.position.z = -10;
@@ -181,6 +181,55 @@ window.addEventListener("scroll", (event) => {
 
 
 
+
+/**
+ * Shooting star
+ */
+const shootingStarGeometry = new THREE.PlaneGeometry(0.8, 0.03);
+const shootingStarMaterial = new THREE.MeshBasicMaterial({
+  color: 0xffffff,
+  transparent: true,
+  opacity: 0,
+  blending: THREE.AdditiveBlending,
+  depthWrite: false,
+});
+const shootingStar = new THREE.Mesh(shootingStarGeometry, shootingStarMaterial);
+camera.add(shootingStar);
+
+const shootingStarPath = { t: 0 };
+const launchShootingStar = () => {
+  const fromLeft = Math.random() > 0.5;
+  const startX = fromLeft ? -7 : 7;
+  const endX = fromLeft ? 7 : -7;
+  const startY = THREE.MathUtils.randFloat(-2, 1);
+  const endY = startY - THREE.MathUtils.randFloat(1, 2);
+  const arcHeight = THREE.MathUtils.randFloat(1.5, 3);
+
+  shootingStarPath.t = 0;
+  gsap.to(shootingStarPath, {
+    t: 1,
+    duration: THREE.MathUtils.randFloat(1, 1.6),
+    ease: "power1.in",
+    onUpdate: () => {
+      const t = shootingStarPath.t;
+      const x = THREE.MathUtils.lerp(startX, endX, t);
+      const y = THREE.MathUtils.lerp(startY, endY, t) + Math.sin(t * Math.PI) * arcHeight;
+      shootingStar.position.set(x, y, -6);
+      shootingStar.material.opacity = Math.sin(t * Math.PI);
+
+      const dx = (endX - startX) / 100;
+      const dy =
+        (endY - startY) / 100 +
+        Math.cos(t * Math.PI) * arcHeight * (Math.PI / 100);
+      shootingStar.rotation.z = Math.atan2(dy, dx);
+    },
+    onComplete: () => {
+      shootingStar.material.opacity = 0;
+      gsap.delayedCall(THREE.MathUtils.randFloat(8, 20), launchShootingStar);
+    },
+  });
+};
+gsap.delayedCall(THREE.MathUtils.randFloat(3, 10), launchShootingStar);
 
 const clock = new THREE.Clock();
 let previousTime = 0;
