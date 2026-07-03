@@ -169,7 +169,7 @@ let currentSection,
 window.addEventListener("scroll", (event) => {
   scrollY = window.scrollY;
   currentSection = Math.round(scrollY / sizes.height);
-  if (currentSection !== previousSection) {
+  if (currentSection !== previousSection && sectionMeshes[currentSection]) {
     previousSection = currentSection;
 
     gsap.to(sectionMeshes[currentSection].rotation, {
