@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 body,
 html {
   width: 100%;
@@ -7,9 +11,58 @@ html {
   font-family: "SinMedia Sans", sans-serif;
 }
 
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 3;
+  background-color: #0a234280;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.navbar-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 15px 20px;
+  gap: 10px 24px;
+}
+
+.navbar-links li {
+  max-width: none;
+}
+
+.navbar-links a {
+  color: #fafafa;
+  text-decoration: none;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.navbar-links a:hover {
+  color: #3b6fff;
+}
+
+/* Keep the navbar as a single scrollable row on narrow viewports so its
+   height stays predictable and `.main-section` scroll-margin-top remains
+   valid at every breakpoint, instead of wrapping into 2-3 lines. */
+@media (max-width: 768px) {
+  .navbar-links {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 12px 16px;
+  }
+}
+
 .music-player {
   position: fixed;
-  top: 15px;
+  top: 64px;
   left: 20px;
   z-index: 1;
   opacity: 0.1;
@@ -36,6 +89,17 @@ html {
   justify-content: center;
   align-items: center;
   margin: 0 20px;
+  scroll-margin-top: 70px;
+}
+
+details summary {
+  cursor: pointer;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+details summary::marker {
+  color: #3b6fff;
 }
 
 .align-left {
