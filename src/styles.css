@@ -112,6 +112,10 @@ html {
   pointer-events: none;
 }
 
+.webgl-fallback {
+  background: radial-gradient(circle at 50% 30%, #3b6fff33, #0a2342 70%);
+}
+
 .main-section {
   height: 100vh;
   z-index: 2;
