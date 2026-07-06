@@ -1,9 +1,17 @@
-import { useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useEffect, useRef } from "react";
+import { useFrame, useLoader } from "@react-three/fiber";
+import { TextureLoader } from "three";
+import Moon from "./Moon.jsx";
 
-function Planet({ planet, prefersReducedMotion }) {
+function Planet({ planet, prefersReducedMotion, isActive, registerRef }) {
   const orbitGroupRef = useRef(null);
   const meshRef = useRef(null);
+  const texture = useLoader(TextureLoader, planet.texture);
+
+  useEffect(() => {
+    registerRef?.(planet.section, meshRef.current);
+    return () => registerRef?.(planet.section, null);
+  }, [registerRef, planet.section]);
 
   useFrame((_, delta) => {
     if (prefersReducedMotion) return;
@@ -19,10 +27,15 @@ function Planet({ planet, prefersReducedMotion }) {
   // placements instead of all planets stacked at angle 0.
   return (
     <group ref={orbitGroupRef} rotation={[0, planet.initialAngle, 0]}>
-      <mesh ref={meshRef} position={[planet.orbitRadius, 0, 0]}>
-        <sphereGeometry args={[planet.size, 24, 24]} />
-        <meshStandardMaterial color={planet.color} />
-      </mesh>
+      <group position={[planet.orbitRadius, 0, 0]}>
+        <mesh ref={meshRef}>
+          <sphereGeometry args={[planet.size, 24, 24]} />
+          <meshStandardMaterial map={texture} />
+        </mesh>
+        {isActive && (
+          <Moon planet={planet} prefersReducedMotion={prefersReducedMotion} />
+        )}
+      </group>
     </group>
   );
 }

@@ -14,7 +14,7 @@ const WAYPOINTS = [
 const CAMERA_OFFSET = new THREE.Vector3(2.5, 2, 6);
 const LERP_SPEED = 2.2;
 
-function ScrollCameraRig({ prefersReducedMotion }) {
+function ScrollCameraRig({ prefersReducedMotion, onActiveSectionChange, objectRefs }) {
   const activeIndexRef = useRef(0);
   const targetPositionRef = useRef(new THREE.Vector3());
   const targetLookAtRef = useRef(new THREE.Vector3());
@@ -23,9 +23,12 @@ function ScrollCameraRig({ prefersReducedMotion }) {
   const applyWaypoint = (index) => {
     activeIndexRef.current = index;
     const waypoint = WAYPOINTS[index];
+    // Fallback reference position, used only until the tracked object
+    // registers itself (e.g. still loading its texture behind Suspense).
     const [x, y, z] = waypoint.position;
     targetLookAtRef.current.set(x, y, z);
     targetPositionRef.current.set(x + CAMERA_OFFSET.x, y + CAMERA_OFFSET.y, z + CAMERA_OFFSET.z);
+    onActiveSectionChange?.(waypoint.section);
   };
 
   useEffect(() => {
@@ -72,6 +75,18 @@ function ScrollCameraRig({ prefersReducedMotion }) {
 
   useFrame((state, delta) => {
     const { camera } = state;
+
+    // Track the active section's actual object each frame (rather than a
+    // fixed reference point) so the camera keeps the planet centered even
+    // as it continues orbiting/spinning while a section is in view.
+    const activeSection = WAYPOINTS[activeIndexRef.current].section;
+    const trackedObject = objectRefs?.current?.[activeSection];
+    if (trackedObject) {
+      trackedObject.getWorldPosition(targetLookAtRef.current);
+      targetPositionRef.current
+        .copy(targetLookAtRef.current)
+        .add(CAMERA_OFFSET);
+    }
 
     if (prefersReducedMotion) {
       camera.position.copy(targetPositionRef.current);

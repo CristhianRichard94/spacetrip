@@ -177,7 +177,7 @@ li li {
   list-style: circle;
 }
 
-li + li {
+li {
   margin-top: 4px;
 }
 .youtube-player__container {

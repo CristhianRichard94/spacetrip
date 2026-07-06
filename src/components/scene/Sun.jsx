@@ -1,8 +1,15 @@
-import { useRef } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useEffect, useRef } from "react";
+import { useFrame, useLoader } from "@react-three/fiber";
+import { TextureLoader } from "three";
 
-function Sun({ prefersReducedMotion }) {
+function Sun({ prefersReducedMotion, registerRef }) {
   const meshRef = useRef(null);
+  const texture = useLoader(TextureLoader, "/textures/2k_sun.jpg");
+
+  useEffect(() => {
+    registerRef?.("hero-section", meshRef.current);
+    return () => registerRef?.("hero-section", null);
+  }, [registerRef]);
 
   useFrame((_, delta) => {
     if (prefersReducedMotion || !meshRef.current) return;
@@ -13,9 +20,10 @@ function Sun({ prefersReducedMotion }) {
     <mesh ref={meshRef} position={[0, 0, 0]}>
       <sphereGeometry args={[1.2, 32, 32]} />
       <meshStandardMaterial
-        color="#ffd27f"
+        map={texture}
         emissive="#ff9d3b"
-        emissiveIntensity={1.4}
+        emissiveMap={texture}
+        emissiveIntensity={1.1}
       />
     </mesh>
   );
