@@ -5,6 +5,7 @@ import Planet from "./Planet.jsx";
 import ScrollCameraRig from "./ScrollCameraRig.jsx";
 import Stars from "./Stars.jsx";
 import ShootingStar from "./ShootingStar.jsx";
+import OrbitLine from "./OrbitLine.jsx";
 import { PLANETS } from "./planetsData.js";
 import hasWebGL from "./hasWebGL.js";
 import usePrefersReducedMotion from "../../hooks/usePrefersReducedMotion.js";
@@ -45,6 +46,9 @@ function SolarSystemScene() {
       <directionalLight position={[0, 3, 2]} intensity={0.45} />
       <Stars />
       <ShootingStar prefersReducedMotion={prefersReducedMotion} />
+      {PLANETS.map((planet) => (
+        <OrbitLine key={`orbit-${planet.name}`} radius={planet.orbitRadius} />
+      ))}
       <Suspense fallback={null}>
         <Sun prefersReducedMotion={prefersReducedMotion} registerRef={registerRef} />
         {PLANETS.map((planet) => (

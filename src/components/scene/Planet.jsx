@@ -1,12 +1,10 @@
 import { useEffect, useRef } from "react";
-import { useFrame, useLoader } from "@react-three/fiber";
-import { TextureLoader } from "three";
+import { useFrame } from "@react-three/fiber";
 import Moon from "./Moon.jsx";
 
 function Planet({ planet, prefersReducedMotion, isActive, registerRef }) {
   const orbitGroupRef = useRef(null);
   const meshRef = useRef(null);
-  const texture = useLoader(TextureLoader, planet.texture);
 
   useEffect(() => {
     registerRef?.(planet.section, meshRef.current);
@@ -30,7 +28,7 @@ function Planet({ planet, prefersReducedMotion, isActive, registerRef }) {
       <group position={[planet.orbitRadius, 0, 0]}>
         <mesh ref={meshRef}>
           <sphereGeometry args={[planet.size, 24, 24]} />
-          <meshStandardMaterial map={texture} />
+          <meshStandardMaterial color={planet.color} />
         </mesh>
         {isActive && (
           <Moon planet={planet} prefersReducedMotion={prefersReducedMotion} />
