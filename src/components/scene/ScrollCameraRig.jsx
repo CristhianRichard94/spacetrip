@@ -12,7 +12,7 @@ const WAYPOINTS = [
 ];
 
 const CAMERA_OFFSET = new THREE.Vector3(2.5, 2, 6);
-const LERP_SPEED = 2.2;
+const LERP_SPEED = 1.1;
 
 function ScrollCameraRig({ prefersReducedMotion, onActiveSectionChange, objectRefs }) {
   const activeIndexRef = useRef(0);
