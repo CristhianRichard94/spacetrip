@@ -6,6 +6,7 @@ const PROJECTS = [
     href: "/ai-engineer-path",
   },
   { label: "Automakers: Landing page", href: "/automakers" },
+  { label: "Spotify Code Generator: STL 3D print generator", href: "/spotify-code-gen" },
 ];
 
 const OLDER_PROJECTS = [
