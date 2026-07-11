@@ -124,6 +124,7 @@ html {
   align-items: center;
   margin: 0 20px;
   scroll-margin-top: 70px;
+  transition: background 0.6s ease, border-color 0.6s ease, box-shadow 0.6s ease;
 }
 
 .text {
@@ -133,6 +134,36 @@ html {
   padding: 28px 32px;
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
+  transition: background 0.6s ease, border-color 0.6s ease, box-shadow 0.6s ease;
+}
+
+.main-section.in-view .text {
+  background: #0a234280;
+  border-color: #3b6fff66;
+  box-shadow: 0 0 32px 4px #3b6fff33, 0 0 0 1px #3b6fff22 inset;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* Fallback for sections without a `.text` wrapper (e.g. HeroSection,
+   SocialsSection) — apply the same highlight treatment directly to the
+   section. `.main-section` has no background/border/box-shadow of its own,
+   so this only affects sections that lack a `.text` child; for the 6
+   sections that do have `.text`, the wrapper sits on top and its own
+   highlight styling is what's visible, so no visual doubling occurs. */
+.main-section.in-view {
+  background: #0a234280;
+  border: 1px solid #3b6fff66;
+  box-shadow: 0 0 32px 4px #3b6fff33, 0 0 0 1px #3b6fff22 inset;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text,
+  .main-section {
+    transition: none;
+  }
 }
 
 details summary {

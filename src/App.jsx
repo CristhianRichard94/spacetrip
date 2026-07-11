@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import useSectionHighlight from "./hooks/useSectionHighlight";
 import Navbar from "./components/Navbar.jsx";
 import SolarSystemScene from "./components/scene/SolarSystemScene.jsx";
 import HeroSection from "./components/sections/HeroSection.jsx";
@@ -12,6 +13,7 @@ import SocialsSection from "./components/sections/SocialsSection.jsx";
 
 function App() {
   const audioRef = useRef(null);
+  useSectionHighlight();
 
   return (
     <>
