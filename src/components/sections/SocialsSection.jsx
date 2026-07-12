@@ -19,16 +19,18 @@ const SOCIALS = [
 function SocialsSection() {
   return (
     <section className="main-section align-left" id="socials-section">
-      <h1>My socials</h1>
-      <ul className="social-media">
-        {SOCIALS.map((social) => (
-          <li key={social.href}>
-            <a target="_blank" rel="noreferrer" href={social.href}>
-              <img src={social.src} alt={social.alt} />
-            </a>
-          </li>
-        ))}
-      </ul>
+      <div className="text">
+        <h1>My socials</h1>
+        <ul className="social-media">
+          {SOCIALS.map((social) => (
+            <li key={social.href}>
+              <a target="_blank" rel="noreferrer" href={social.href}>
+                <img src={social.src} alt={social.alt} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
   );
 }
