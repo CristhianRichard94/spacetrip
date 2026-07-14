@@ -1,4 +1,5 @@
 import MusicToggle from "./MusicToggle.jsx";
+import VisualModeToggle from "./VisualModeToggle.jsx";
 
 const NAV_LINKS = [
   { href: "#hero-section", label: "Home" },
@@ -20,8 +21,13 @@ function Navbar({ audioRef }) {
             <a href={link.href}>{link.label}</a>
           </li>
         ))}
-        <li className="music-player">
-          <MusicToggle audioRef={audioRef} />
+        <li className="controls-stack">
+          <div className="visual-mode-player">
+            <VisualModeToggle />
+          </div>
+          <div className="music-player">
+            <MusicToggle audioRef={audioRef} />
+          </div>
         </li>
       </ul>
     </nav>

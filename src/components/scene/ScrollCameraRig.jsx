@@ -14,11 +14,37 @@ const WAYPOINTS = [
 const CAMERA_OFFSET = new THREE.Vector3(2.5, 2, 6);
 const LERP_SPEED = 1.1;
 
+// Determine which section is actually in view right now by comparing each
+// section element's position against the viewport, so the camera can land
+// on the correct waypoint immediately on mount instead of always starting
+// at index 0 and lerping back into place once the IntersectionObserver
+// reports the real section (which caused a visible flash/snap on every
+// classic <-> enhanced mode swap).
+function computeCurrentWaypointIndex() {
+  if (typeof document === "undefined") return 0;
+  const viewportCenter = window.innerHeight / 2;
+  let bestIndex = 0;
+  let bestDistance = Infinity;
+  WAYPOINTS.forEach((waypoint, index) => {
+    const element = document.getElementById(waypoint.section);
+    if (!element) return;
+    const rect = element.getBoundingClientRect();
+    const elementCenter = rect.top + rect.height / 2;
+    const distance = Math.abs(elementCenter - viewportCenter);
+    if (distance < bestDistance) {
+      bestDistance = distance;
+      bestIndex = index;
+    }
+  });
+  return bestIndex;
+}
+
 function ScrollCameraRig({ prefersReducedMotion, onActiveSectionChange, objectRefs }) {
   const activeIndexRef = useRef(0);
   const targetPositionRef = useRef(new THREE.Vector3());
   const targetLookAtRef = useRef(new THREE.Vector3());
   const currentLookAtRef = useRef(new THREE.Vector3());
+  const hasSnappedRef = useRef(false);
 
   const applyWaypoint = (index) => {
     activeIndexRef.current = index;
@@ -32,7 +58,7 @@ function ScrollCameraRig({ prefersReducedMotion, onActiveSectionChange, objectRe
   };
 
   useEffect(() => {
-    applyWaypoint(0);
+    applyWaypoint(computeCurrentWaypointIndex());
 
     const sectionElements = WAYPOINTS.map((waypoint) =>
       document.getElementById(waypoint.section)
@@ -88,8 +114,14 @@ function ScrollCameraRig({ prefersReducedMotion, onActiveSectionChange, objectRe
         .add(CAMERA_OFFSET);
     }
 
-    if (prefersReducedMotion) {
+    if (prefersReducedMotion || !hasSnappedRef.current) {
+      // First frame after mount (or reduced-motion mode): snap directly to
+      // the resolved waypoint instead of lerping in from the camera's
+      // default starting position, which is what produced the hero
+      // flash-then-correct on mode swap.
+      hasSnappedRef.current = true;
       camera.position.copy(targetPositionRef.current);
+      currentLookAtRef.current.copy(targetLookAtRef.current);
       camera.lookAt(targetLookAtRef.current);
       return;
     }
