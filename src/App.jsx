@@ -1,7 +1,8 @@
 import { useRef } from "react";
 import useSectionHighlight from "./hooks/useSectionHighlight";
 import Navbar from "./components/Navbar.jsx";
-import SolarSystemScene from "./components/scene/SolarSystemScene.jsx";
+import SceneRoot from "./components/scene/SceneRoot.jsx";
+import { SceneModeProvider } from "./context/SceneModeContext.jsx";
 import HeroSection from "./components/sections/HeroSection.jsx";
 import PortfolioSection from "./components/sections/PortfolioSection.jsx";
 import AboutSection from "./components/sections/AboutSection.jsx";
@@ -16,14 +17,14 @@ function App() {
   useSectionHighlight();
 
   return (
-    <>
+    <SceneModeProvider>
       <audio ref={audioRef} autoPlay loop muted>
         <source src="background-music.wav" type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
 
       <Navbar audioRef={audioRef} />
-      <SolarSystemScene />
+      <SceneRoot />
 
       <HeroSection />
       <PortfolioSection />
@@ -33,7 +34,7 @@ function App() {
       <LanguagesSection />
       <SkillsSection />
       <SocialsSection />
-    </>
+    </SceneModeProvider>
   );
 }
 

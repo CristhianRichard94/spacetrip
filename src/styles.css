@@ -61,7 +61,22 @@ html {
   }
 }
 
-.music-player {
+.controls-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (max-width: 768px) {
+  .controls-stack {
+    flex-direction: row;
+    gap: 6px;
+  }
+}
+
+.music-player,
+.visual-mode-player {
   position: relative;
   display: flex;
   align-items: center;
@@ -101,6 +116,76 @@ html {
 
 .music-tooltip.show {
   opacity: 1;
+}
+
+.visual-mode-toggle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #3b6fff;
+  background: #0a2342cc;
+  backdrop-filter: blur(4px);
+  color: #fafafa;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+}
+
+.visual-mode-toggle:hover:not(:disabled) {
+  background: #3b6fff;
+  transform: scale(1.08);
+}
+
+.visual-mode-toggle:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.visual-mode-toggle:disabled {
+  cursor: progress;
+  opacity: 0.7;
+}
+
+.visual-mode-toggle:focus-visible {
+  outline: 2px solid #3b6fff;
+  outline-offset: 2px;
+}
+
+.visual-mode-tooltip {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: max-content;
+  max-width: 220px;
+  padding: 8px 12px;
+  background: #0a2342f0;
+  border: 1px solid #3b6fff;
+  border-radius: 8px;
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.visual-mode-tooltip.show {
+  opacity: 1;
+}
+
+.orbit-spinner {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid #3b6fff4d;
+  border-top-color: #3b6fff;
+  animation: orbit-spin 0.9s linear infinite;
+}
+
+@keyframes orbit-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .webgl {
@@ -151,6 +236,22 @@ html {
   .text,
   .main-section {
     transition: none;
+  }
+
+  .visual-mode-toggle {
+    transition: none;
+  }
+
+  .visual-mode-toggle:hover:not(:disabled) {
+    transform: none;
+  }
+
+  .visual-mode-tooltip {
+    transition: none;
+  }
+
+  .orbit-spinner {
+    animation-duration: 2.4s;
   }
 }
 
