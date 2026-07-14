@@ -75,6 +75,15 @@ export function SceneModeProvider({ children }) {
   const sessionUnsupportedRef = useRef(false);
 
   const setMode = (mode, explicit = true) => {
+    // An explicit user request to switch back into enhanced mode is a
+    // deliberate retry: it must not stay permanently blocked by a session
+    // flag set from a single earlier (possibly transient, swap-related)
+    // context loss. Only manual re-selection clears the flag — automatic /
+    // non-explicit mode changes never do, so we don't silently keep
+    // retrying a genuinely unsupported device in a loop.
+    if (mode === "enhanced" && explicit) {
+      sessionUnsupportedRef.current = false;
+    }
     const next = { mode, explicit };
     setState(next);
     writeStoredMode(next);
