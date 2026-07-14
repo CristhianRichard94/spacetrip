@@ -1,7 +1,7 @@
 import { createContext, useContext, useMemo, useRef, useState } from "react";
 import usePrefersReducedMotion from "../hooks/usePrefersReducedMotion.js";
 
-const STORAGE_KEY = "sceneMode";
+const STORAGE_KEY = "sceneMode.v2";
 const HINT_SEEN_KEY = "sceneModeHintSeen";
 
 function readStoredMode(defaultsToClassic) {
