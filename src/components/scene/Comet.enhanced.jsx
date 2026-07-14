@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Trail, Sparkles } from "@react-three/drei";
+import { Trail } from "@react-three/drei";
 import * as THREE from "three";
 import useSafeFrame from "./useSafeFrame.js";
 
@@ -34,7 +34,6 @@ function CometEnhanced({ prefersReducedMotion }) {
       <mesh ref={meshRef}>
         <sphereGeometry args={[0.08, 12, 12]} />
         <meshBasicMaterial color="#eaf4ff" />
-        <Sparkles count={20} scale={1.5} size={2} speed={0.3} opacity={0.6} />
       </mesh>
     </Trail>
   );
