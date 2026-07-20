@@ -11,6 +11,7 @@ import EducationSection from "./components/sections/EducationSection.jsx";
 import LanguagesSection from "./components/sections/LanguagesSection.jsx";
 import SkillsSection from "./components/sections/SkillsSection.jsx";
 import SocialsSection from "./components/sections/SocialsSection.jsx";
+import Chatbot from "./components/Chatbot.jsx";
 
 function App() {
   const audioRef = useRef(null);
@@ -34,6 +35,7 @@ function App() {
       <LanguagesSection />
       <SkillsSection />
       <SocialsSection />
+      <Chatbot />
     </SceneModeProvider>
   );
 }
