@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 import usePrefersReducedMotion from "../hooks/usePrefersReducedMotion.js";
 
 const STORAGE_KEY = "sceneMode.v2";
@@ -63,16 +63,31 @@ const SceneModeContext = createContext(null);
 
 export function SceneModeProvider({ children }) {
   const prefersReducedMotion = usePrefersReducedMotion();
-  const lowEndDevice = useMemo(() => isLowEndDevice(), []);
-  const [state, setState] = useState(() => {
-    const defaultsToClassic = prefersReducedMotion || lowEndDevice;
-    const stored = readStoredMode(defaultsToClassic);
-    if (stored) return stored;
-    return { mode: defaultsToClassic ? "classic" : "enhanced", explicit: false };
-  });
+  const [lowEndDevice, setLowEndDevice] = useState(false);
+  // Cheap static default so initial render doesn't block on
+  // localStorage/navigator checks. Resolved to the real value below, after
+  // mount, before SceneRoot (lazily loaded) ever renders.
+  const [state, setState] = useState({ mode: "classic", explicit: false });
+  const [resolved, setResolved] = useState(false);
   const [loading, setLoading] = useState(false);
   const [fallbackNotice, setFallbackNotice] = useState(false);
   const sessionUnsupportedRef = useRef(false);
+
+  useEffect(() => {
+    const detectedLowEndDevice = isLowEndDevice();
+    setLowEndDevice(detectedLowEndDevice);
+    const defaultsToClassic = prefersReducedMotion || detectedLowEndDevice;
+    const stored = readStoredMode(defaultsToClassic);
+    const resolvedMode =
+      stored ?? { mode: defaultsToClassic ? "classic" : "enhanced", explicit: false };
+    setState((prev) =>
+      prev.mode === resolvedMode.mode && prev.explicit === resolvedMode.explicit
+        ? prev
+        : resolvedMode
+    );
+    setResolved(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const setMode = (mode, explicit = true) => {
     // An explicit user request to switch back into enhanced mode is a
@@ -112,6 +127,7 @@ export function SceneModeProvider({ children }) {
     () => ({
       mode: state.mode,
       explicit: state.explicit,
+      resolved,
       setMode,
       loading,
       setLoading,
@@ -124,7 +140,15 @@ export function SceneModeProvider({ children }) {
       dismissFallbackNotice,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [state.mode, state.explicit, loading, lowEndDevice, prefersReducedMotion, fallbackNotice]
+    [
+      state.mode,
+      state.explicit,
+      resolved,
+      loading,
+      lowEndDevice,
+      prefersReducedMotion,
+      fallbackNotice,
+    ]
   );
 
   return (
