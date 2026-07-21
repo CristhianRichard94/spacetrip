@@ -1,5 +1,4 @@
-const { Ratelimit } = require("@upstash/ratelimit");
-const { Redis } = require("@upstash/redis");
+const { getStore } = require("@netlify/blobs");
 const OpenAI = require("openai");
 const { RESUME_CONTEXT } = require("./knowledge");
 
@@ -71,35 +70,49 @@ const CANNED_REFUSAL =
   "I can only help with questions about Cristhian's professional experience, skills, education, and projects. Feel free to ask me about those, or download his résumé using the button below.";
 
 // --- Rate limiting ----------------------------------------------------------------
+// Netlify Blobs backs the counters instead of an external Redis: it's built into
+// every Netlify site (no account/network setup) and works the same in `netlify dev`
+// and production. Reads-then-writes below are not atomic, so two concurrent
+// requests from the same IP can both read the same count and both succeed —
+// ponytail: acceptable slop for a hobby-site rate limit, revisit with a
+// Blobs-based CAS/lock (or a real atomic-counter store) if abuse ever proves costly.
 
-let redis;
-let burstLimiter;
-let dailyLimiter;
-let globalLimiter;
+let store;
+function getBlobStore() {
+  if (!store) store = getStore("chatbot");
+  return store;
+}
 
-function getLimiters() {
-  if (!redis) {
-    redis = new Redis({
-      url: process.env.UPSTASH_REDIS_REST_URL,
-      token: process.env.UPSTASH_REDIS_REST_TOKEN,
-    });
-    burstLimiter = new Ratelimit({
-      redis,
-      limiter: Ratelimit.slidingWindow(10, "1 m"),
-      prefix: "chatbot:burst",
-    });
-    dailyLimiter = new Ratelimit({
-      redis,
-      limiter: Ratelimit.slidingWindow(50, "1 d"),
-      prefix: "chatbot:daily",
-    });
-    globalLimiter = new Ratelimit({
-      redis,
-      limiter: Ratelimit.slidingWindow(300, "1 d"),
-      prefix: "chatbot:global",
-    });
+async function checkLimit(key, limit, windowMs) {
+  const now = Date.now();
+  const s = getBlobStore();
+  const record = (await s.get(key, { type: "json" })) || { count: 0, resetAt: now + windowMs };
+
+  if (now > record.resetAt) {
+    record.count = 0;
+    record.resetAt = now + windowMs;
   }
-  return { burstLimiter, dailyLimiter, globalLimiter };
+  record.count += 1;
+  await s.setJSON(key, record);
+
+  return { success: record.count <= limit, resetAt: record.resetAt };
+}
+
+const CHAT_LOG_KEY = "log";
+const CHAT_LOG_MAX_ENTRIES = 500;
+
+// Debug-only conversation log, capped to the most recent N entries so it
+// never grows unbounded. Fire-and-forget: a logging failure must never
+// break the user-facing chat response.
+async function logConversation(ip, message, reply) {
+  try {
+    const s = getBlobStore();
+    const entries = (await s.get(CHAT_LOG_KEY, { type: "json" })) || [];
+    entries.unshift({ ip, message, reply, ts: new Date().toISOString() });
+    await s.setJSON(CHAT_LOG_KEY, entries.slice(0, CHAT_LOG_MAX_ENTRIES));
+  } catch (err) {
+    console.error("CHAT_LOG_ERROR:", err);
+  }
 }
 
 // Only `x-nf-client-connection-ip` reflects the actual TCP connection IP as
@@ -145,65 +158,49 @@ exports.handler = async (event) => {
 
   const ip = getClientIp(event.headers);
 
+  // Burst check is the primary defense against rapid-fire abuse from a single
+  // IP, so it fails CLOSED: if Blobs errors here, we reject the request
+  // rather than let it through.
+  let burstResult;
   try {
-    const { burstLimiter: burst, dailyLimiter: daily, globalLimiter: global_ } = getLimiters();
+    burstResult = await checkLimit(`burst:${ip}`, 10, 60 * 1000);
+  } catch (err) {
+    console.error("RATE_LIMIT_INFRA_ERROR: burst limiter unavailable:", err);
+    return jsonResponse(
+      503,
+      { error: "Chat service is temporarily unavailable. Please try again shortly." }
+    );
+  }
 
-    // Burst check is the primary defense against rapid-fire abuse from a
-    // single IP, so it fails CLOSED: if Upstash errors here, we reject the
-    // request rather than let it through.
-    let burstResult;
-    try {
-      burstResult = await burst.limit(ip);
-    } catch (err) {
-      console.error("RATE_LIMIT_INFRA_ERROR: burst limiter unavailable:", err);
-      return jsonResponse(
-        503,
-        { error: "Chat service is temporarily unavailable. Please try again shortly." }
-      );
-    }
+  if (!burstResult.success) {
+    const retryAfterSeconds = Math.max(1, Math.ceil((burstResult.resetAt - Date.now()) / 1000));
+    return jsonResponse(
+      429,
+      { error: "Too many requests. Please slow down and try again shortly." },
+      { "Retry-After": String(retryAfterSeconds) }
+    );
+  }
 
-    if (!burstResult.success) {
-      const retryAfterSeconds = Math.max(
-        1,
-        Math.ceil((burstResult.reset - Date.now()) / 1000)
-      );
+  // Daily (per-IP) and global (across all IPs) limiters fail open on Blobs
+  // outages — acceptable for a hobby site — but are still checked and
+  // enforced when they do succeed.
+  try {
+    const [dailyResult, globalResult] = await Promise.all([
+      checkLimit(`daily:${ip}`, 50, 24 * 60 * 60 * 1000),
+      checkLimit("global", 300, 24 * 60 * 60 * 1000),
+    ]);
+
+    if (!dailyResult.success || !globalResult.success) {
+      const limiting = !dailyResult.success ? dailyResult : globalResult;
+      const retryAfterSeconds = Math.max(1, Math.ceil((limiting.resetAt - Date.now()) / 1000));
       return jsonResponse(
         429,
         { error: "Too many requests. Please slow down and try again shortly." },
         { "Retry-After": String(retryAfterSeconds) }
       );
     }
-
-    // Daily (per-IP) and global (across all IPs) limiters fail open on
-    // Upstash outages — acceptable for a hobby site — but are still checked
-    // and logged when they do succeed.
-    try {
-      const [dailyResult, globalResult] = await Promise.all([
-        daily.limit(ip),
-        global_.limit("global"),
-      ]);
-
-      if (!dailyResult.success || !globalResult.success) {
-        const limiting = !dailyResult.success ? dailyResult : globalResult;
-        const retryAfterSeconds = Math.max(
-          1,
-          Math.ceil((limiting.reset - Date.now()) / 1000)
-        );
-        return jsonResponse(
-          429,
-          { error: "Too many requests. Please slow down and try again shortly." },
-          { "Retry-After": String(retryAfterSeconds) }
-        );
-      }
-    } catch (err) {
-      console.error("RATE_LIMIT_INFRA_ERROR: daily/global limiter unavailable, failing open:", err);
-    }
   } catch (err) {
-    console.error("RATE_LIMIT_INFRA_ERROR:", err);
-    return jsonResponse(
-      503,
-      { error: "Chat service is temporarily unavailable. Please try again shortly." }
-    );
+    console.error("RATE_LIMIT_INFRA_ERROR: daily/global limiter unavailable, failing open:", err);
   }
 
   let payload;
@@ -245,6 +242,8 @@ exports.handler = async (event) => {
     const reply =
       completion.choices?.[0]?.message?.content?.trim() ||
       "Sorry, I couldn't come up with an answer to that. Could you rephrase your question about Cristhian's experience?";
+
+    logConversation(ip, message, reply);
 
     return jsonResponse(200, { reply });
   } catch (err) {

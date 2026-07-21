@@ -9,6 +9,12 @@ const INITIAL_MESSAGE = {
     "Hi! Ask me about Cristhian's experience, skills, education, or projects — or download his résumé below.",
 };
 
+const SUGGESTIONS = [
+  "What's his experience with React?",
+  "What projects has he worked on?",
+  "What's his DevOps background?",
+];
+
 function Chatbot() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([INITIAL_MESSAGE]);
@@ -55,7 +61,10 @@ function Chatbot() {
     ) {
       return;
     }
+    await sendMessage(trimmed);
+  };
 
+  const sendMessage = async (trimmed) => {
     const userMessage = { role: "user", content: trimmed };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
@@ -147,6 +156,22 @@ function Chatbot() {
               </div>
             )}
           </div>
+
+          {messages.length === 1 && (
+            <div className="chatbot-suggestions">
+              {SUGGESTIONS.map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  className="chatbot-suggestion-btn"
+                  onClick={() => sendMessage(s)}
+                  disabled={status === "loading" || status === "rate-limited"}
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          )}
 
           <a
             className="chatbot-resume-link"

@@ -1,3 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @ds design tokens, scoped so they don't collide with this site's own
+   CSS variables — only elements under [data-ds-scope] pick them up. */
+[data-ds-scope] {
+  --accent-50: #eff4ff;
+  --accent-100: #dbe6fe;
+  --accent-200: #bfd4fe;
+  --accent-300: #93b7fd;
+  --accent-400: #6090fa;
+  --accent-500: #3b66f5;
+  --accent-600: #2547e8;
+  --accent-700: #1e3ac7;
+  --accent-800: #1e3aa1;
+  --accent-900: #1e3a8a;
+  --accent-950: #16215a;
+
+  --bg: #0a0a0a;
+  --fg: #fafafa;
+  --muted: #18181b;
+  --muted-foreground: #a1a1aa;
+  --border: #27272a;
+  --ring: var(--accent-500);
+  --accent: var(--accent-700);
+  --accent-foreground: #fafafa;
+  --destructive: #ef4444;
+  --destructive-foreground: #fafafa;
+  --card: #111113;
+  --card-foreground: #fafafa;
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 4px 12px rgb(0 0 0 / 0.4);
+  --shadow-lg: 0 12px 32px rgb(0 0 0 / 0.5);
+  --shadow-glow: 0 0 24px var(--accent-600);
+}
+
 html {
   scroll-behavior: smooth;
   scroll-snap-type: y proximity;
@@ -323,11 +365,11 @@ li {
   z-index: 1;
 }
 .footnote {
-  font-size: 12px;
+  font-size: 11px;
   position: fixed;
   bottom: 15px;
-  right: 30px;
-  padding: 6px 12px;
+  left: 20px;
+  padding: 5px 10px;
   background: #0a234280;
   border: 1px solid #ffffff1a;
   border-radius: 20px;
@@ -437,6 +479,46 @@ a:hover {
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   overflow: hidden;
+  animation: chatbot-slide-in 0.25s ease-out;
+}
+
+@keyframes chatbot-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chatbot-panel {
+    animation: none;
+  }
+}
+
+.chatbot-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 12px 10px;
+}
+
+.chatbot-suggestion-btn {
+  background: #3b6fff26;
+  border: 1px solid #3b6fff4d;
+  color: #fafafa;
+  border-radius: 14px;
+  padding: 5px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.chatbot-suggestion-btn:hover {
+  background: #3b6fff40;
 }
 
 .chatbot-panel-header {
