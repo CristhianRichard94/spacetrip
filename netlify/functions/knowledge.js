@@ -37,7 +37,7 @@ Experience:
     -Built a multi-tenant web application in Angular to create and  manage appointments, connected to a backend in .NET Framework.
 - Scholar/researcher in a database research group at FRCU-UTN, since 03/2018.
   - Worked in several research projects, including:
-    -Built a client in vue.js, server in python with flask, using celery as broker and redis a queue db, an app to stream tweets by keywords and store them in a mongo database for later analysis.
+    -Built a client in vue.js, server in python with flask, using celery as broker and redis a queue db, an app to stream tweets by keywords and store them in a mongo database for later analysis. Repo: https://github.com/GIBD/tweets-harvester
     -Built a python script to analyze the tweets stored in the database, and generate a report with the most relevant information.
 Personal/side projects:
 - Roomigos: Next.js 14 + React 18 + TypeScript web app, Tailwind CSS 4, shadcn/Radix UI components, Firebase for messaging/chat, react-hook-form + zod for forms/validation. Single Next.js App Router app deployed on Vercel.
@@ -54,10 +54,51 @@ Skills:
 - Backend: Node.js, Python, .NET Framework, SQL, MongoDB.
 - DevOps: Git, GitHub, Docker, Vercel, GCP, Fly.io, AWS: IAM ECS2 CDK S3.
 
+Courses:
+- Udemy
+  - Advanced Angular by Fernando Herrera, Udemy, 2020.
+- DeepLearning.ai
+    - MCP: Build Rich-Context AI Apps with Anthropic - jun. 2026
+    - Claude Code: A Highly Agentic Coding Assistant - jun. 2026
+    - Agentic AI - jun. 2026
+    - Generative AI for Software Development - jun. 2026
+- Linkedin Learning
+  - Programming Foundations: Secure Coding (2018) - Dec 2024
+  - React.js Essential Training (2020) - Nov 2020
+  - Learning JavaScript Animations with GreenSock - Oct 2021
+  - Penetration Testing: Advanced Web Testing (2018) - Sep 2021
+  - Web Security: Same-Origin Policies - May 2019
+  - Python Essential Training - Apr 2024
+  - GraphQL Essential Training (2022) - Jun 2022
+  - Building RESTful APIs with Flask - Aug 2019
+  - Programming Foundations: Web Security (2019) - May 2019
+  - React: Creating and Hosting a Full-Stack Site (2022) - Sep 2022
+  - React.js: Building an Interface - Apr 2021
+  - React.js Essential Training - May 2022
+  - Learning Threat Modeling for Security Professionals - Jul 2024
+  - Learning the OWASP Top 10 - Aug 2024
+  - JavaScript: Patterns - Oct 2025
+  - Web Security: User Authentication an 2019
+  - JavaScript: Security Essentials (2019) - Jan 2019
+  - TypeScript Essential Training (2016) - May 2016
+  - Preventing Harassment in the Workplace
+  - Fighting Gender Bias at Work - Apr 2019
+  - Out and Proud: Approaching LGBT Issues in the Workplace - Jun 2020 (Retired)
+  - Communicating about Culturally Sensitive Issues (2022)
+  - Unconscious Bias (2017) - May 2017
+...Among others
+
+
 Languages:
 -Spanish (native)
--English (fluent) IELTS C1 Advanced qualification 02/2025
+-English (fluent) => Taken IELTS Exam with C1 Advanced qualification - 02/2025
 
+Summary:
+- Started working with Angular in 2018 at University, continued in Sidesys IT Solutions and Media.Monks,
+- Learned React While in Media.Monks around 2022 and Next.js around 2024,
+- Been learning about Neural Networks, Machine Learning, AI, LLMs, Fine tunning models, RAGs since 2024 with a previous background at university and database research group work.
+- Learned Python in 2018 at University, went deep in Media.Monks on 2021 and personal projects. Using it since then.
+- Started using Node as backend in 2022 for Media.Monks projects, using it since then.
 
 About: Graduated as a systems engineer from UTN. Proactive, reliable, team player,
 problem solving mindset, positive, friendly, communicative, outgoing. Sports advocate, nature lover, traveler.
