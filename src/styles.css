@@ -91,19 +91,81 @@ html {
   color: #3b6fff;
 }
 
-/* Keep the navbar as a single scrollable row on narrow viewports so its
-   height stays predictable and `.main-section` scroll-margin-top remains
-   valid at every breakpoint, instead of wrapping into 2-3 lines. */
-/* Content only overflows the single-line layout below this width, so the
-   scroll affordance is scoped here instead of applying globally (which
-   left desktop viewports with a phantom horizontally-scrollable strip
-   that hijacked trackpad/wheel gestures near the top of the page). */
+.navbar-toggle {
+  display: none;
+}
+
+/* Below this width the links no longer fit in a single row, so swap the
+   horizontal layout for a slide-in drawer toggled by a hamburger button
+   instead of letting the row overflow (which previously hijacked
+   trackpad/touch scroll gestures near the top of the page). */
 @media (max-width: 768px) {
-  .navbar-links {
-    justify-content: flex-start;
+  .navbar {
     padding: 12px 16px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+  }
+
+  .navbar-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid #3b6fff;
+    background: #0a2342cc;
+    color: #fafafa;
+    font-size: 16px;
+    cursor: pointer;
+    backdrop-filter: blur(4px);
+  }
+
+  .navbar-toggle:hover {
+    background: #3b6fff;
+  }
+
+  .navbar-links {
+    position: fixed;
+    top: 0;
+    left: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: min(75vw, 280px);
+    height: 100vh;
+    margin: 0;
+    padding: 72px 20px 20px;
+    gap: 4px;
+    background-color: #0a2342f5;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    overflow-y: auto;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .navbar-links.open {
+    transform: translateX(0);
+  }
+
+  .navbar-links li {
+    width: 100%;
+  }
+
+  .navbar-links a {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    font-size: 15px;
+  }
+
+  .controls-stack {
+    margin-top: 12px;
+  }
+}
+
+@media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+  .navbar-links {
+    transition: none;
   }
 }
 
