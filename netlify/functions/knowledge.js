@@ -38,15 +38,15 @@ Experience:
 - Scholar/researcher in a database research group at FRCU-UTN, since 03/2018.
   - Worked in several research projects, including:
     -Built a client in vue.js, server in python with flask, using celery as broker and redis a queue db, an app to stream tweets by keywords and store them in a mongo database for later analysis. Repo: https://github.com/GIBD/tweets-harvester
-    -Built a python script to analyze the tweets stored in the database, and generate a report with the most relevant information.
+    -Built a python script to analyze the tweets stored in the database, and generate a report with the most relevant information. Repo: https://github.com/CristhianRichard94/tweets-evaluator
 Personal/side projects:
-- Roomigos: Next.js 14 + React 18 + TypeScript web app, Tailwind CSS 4, shadcn/Radix UI components, Firebase for messaging/chat, react-hook-form + zod for forms/validation. Single Next.js App Router app deployed on Vercel.
-- Financial Assistant (FinSight): pnpm monorepo — Next.js 15 frontend/API plus a separate Python RAG backend (FastAPI, Claude for answer synthesis, OpenAI embeddings, Supabase/pgvector for vector storage). Infrastructure defined with AWS CDK. Used git worktrees to work on multiple parallel features/branches at once.
-- AI Engineer Path: a learning repo of several independent AI-focused apps, including an MCP (Model Context Protocol) server for task tracking and another MCP server for media/transcription tooling, a RAG-based document bot (Flask + Next.js + Celery + Qdrant), a voice assistant pipeline (speech-to-text -> GPT -> text-to-speech), and an OpenAI-powered chat app.
-- Spotify Code Generator: Python/Flask backend with rate limiting (Flask-Limiter), Three.js frontend, OpenSCAD used to generate SVG/STL files, deployed via Docker to Fly.io.
-- Spacetrip: this site — React 18 + Vite, React Three Fiber/Drei/postprocessing (Three.js scenes), GSAP for scroll animation, Tailwind CSS. Consumes a separate design-system project as local packages.
-- Design System: pnpm workspace monorepo with a design-tokens package, a shared UI component package, and a showcase app; used as a shared dependency by other personal projects such as Spacetrip.
-- Futsal Manager: two-service app — FastAPI + SQLAlchemy + PostgreSQL + JWT auth backend, and a Next.js + NextAuth (Google OAuth) frontend with Mercado Pago payment integration.
+- Roomigos(https://github.com/CristhianRichard94/roomigos): Next.js 14 + React 18 + TypeScript web app, Tailwind CSS 4, shadcn/Radix UI components, Firebase for messaging/chat, react-hook-form + zod for forms/validation. Single Next.js App Router app deployed on Vercel.
+- Financial Assistant (https://github.com/CristhianRichard94/Financial-Assistant): pnpm monorepo — Next.js 15 frontend/API plus a separate Python RAG backend (FastAPI, Claude for answer synthesis, OpenAI embeddings, Supabase/pgvector for vector storage). Infrastructure defined with AWS CDK. Used git worktrees to work on multiple parallel features/branches at once.
+- AI Engineer Path(https://github.com/CristhianRichard94/ai-engineer-path): a learning repo of several independent AI-focused apps, including an MCP (Model Context Protocol) server for task tracking and another MCP server for media/transcription tooling, a RAG-based document bot (Flask + Next.js + Celery + Qdrant), a voice assistant pipeline (speech-to-text -> GPT -> text-to-speech), and an OpenAI-powered chat app.
+- Spotify Code Generator(https://github.com/CristhianRichard94/Spotify-Code-Generator): Python/Flask backend with rate limiting (Flask-Limiter), Three.js frontend, OpenSCAD used to generate SVG/STL files, deployed via Docker to Fly.io.
+- Spacetrip(https://github.com/CristhianRichard94/spacetrip): this site — React 18 + Vite, React Three Fiber/Drei/postprocessing (Three.js scenes), GSAP for scroll animation, Tailwind CSS. Consumes a separate design-system project as local packages.
+- Design System(https://github.com/CristhianRichard94/design-system): pnpm workspace monorepo with a design-tokens package, a shared UI component package, and a showcase app; used as a shared dependency by other personal projects such as Spacetrip.
+- Futsal Manager(https://github.com/CristhianRichard94/futsal-manager): two-service app — FastAPI + SQLAlchemy + PostgreSQL + JWT auth backend, and a Next.js + NextAuth (Google OAuth) frontend with Mercado Pago payment integration.
 
 Skills:
 - Frontend: HTML5, CSS3, JavaScript, TypeScript, Angular, React, Next.js, Lit, Vue.js, Three.js.
