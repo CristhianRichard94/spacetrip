@@ -79,7 +79,23 @@ const CANNED_REFUSAL =
 
 let store;
 function getBlobStore() {
-  if (!store) store = getStore("chatbot");
+  if (store) return store;
+
+  // Automatic siteID/token injection into the function environment doesn't
+  // happen on every Netlify deploy path — when it's missing, fall back to
+  // explicit credentials from env vars (Site settings > Environment variables:
+  // NETLIFY_SITE_ID from Site settings > General, NETLIFY_BLOBS_TOKEN as a
+  // Personal Access Token from User settings > Applications).
+  if (process.env.NETLIFY_SITE_ID && process.env.NETLIFY_BLOBS_TOKEN) {
+    store = getStore({
+      name: "chatbot",
+      siteID: process.env.NETLIFY_SITE_ID,
+      token: process.env.NETLIFY_BLOBS_TOKEN,
+    });
+  } else {
+    store = getStore("chatbot");
+  }
+
   return store;
 }
 
