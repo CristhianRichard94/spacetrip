@@ -262,7 +262,7 @@ exports.handler = async (event) => {
     const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
-      max_tokens: 300,
+      max_tokens: 600,
       temperature: 0.3,
       messages: [
         { role: "system", content: buildSystemPrompt() },
@@ -270,9 +270,14 @@ exports.handler = async (event) => {
       ],
     });
 
-    const reply =
-      completion.choices?.[0]?.message?.content?.trim() ||
+    const choice = completion.choices?.[0];
+    let reply =
+      choice?.message?.content?.trim() ||
       "Sorry, I couldn't come up with an answer to that. Could you rephrase your question about Cristhian's experience?";
+
+    if (choice?.finish_reason === "length") {
+      reply += " [response truncated]";
+    }
 
     logConversation(ip, message, reply);
 

@@ -21,6 +21,7 @@ function Chatbot() {
   const [input, setInput] = useState("");
   const [status, setStatus] = useState("idle"); // idle | loading | error | rate-limited
   const [retryAfter, setRetryAfter] = useState(0);
+  const [copiedIndex, setCopiedIndex] = useState(null);
   const listRef = useRef(null);
 
   useEffect(() => {
@@ -121,6 +122,16 @@ function Chatbot() {
     }
   };
 
+  const handleCopy = async (index, content) => {
+    try {
+      await navigator.clipboard.writeText(content);
+      setCopiedIndex(index);
+      setTimeout(() => setCopiedIndex((prev) => (prev === index ? null : prev)), 1500);
+    } catch (err) {
+      // clipboard unavailable, ignore silently
+    }
+  };
+
   const remaining = MAX_MESSAGE_LENGTH - input.length;
 
   return (
@@ -148,6 +159,16 @@ function Chatbot() {
                 }`}
               >
                 {msg.content}
+                {msg.role === "assistant" && (
+                  <button
+                    type="button"
+                    className="chatbot-copy-btn"
+                    aria-label="Copy message"
+                    onClick={() => handleCopy(index, msg.content)}
+                  >
+                    {copiedIndex === index ? "✓" : "⧉"}
+                  </button>
+                )}
               </div>
             ))}
             {status === "loading" && (

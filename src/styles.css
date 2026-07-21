@@ -627,6 +627,25 @@ a:hover {
   align-self: flex-start;
   background: #ffffff14;
   border: 1px solid #3b6fff4d;
+  position: relative;
+  padding-right: 28px;
+}
+
+.chatbot-copy-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  border: none;
+  background: transparent;
+  color: #9fb4ff;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 2px;
+}
+
+.chatbot-copy-btn:hover {
+  color: #fafafa;
 }
 
 .chatbot-message-user {
