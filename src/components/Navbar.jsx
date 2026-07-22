@@ -1,20 +1,23 @@
 import { useState } from "react";
 import MusicToggle from "./MusicToggle.jsx";
 import VisualModeToggle from "./VisualModeToggle.jsx";
+import LangToggle from "./LangToggle.jsx";
+import useTranslation from "../hooks/useTranslation.js";
 
 const NAV_LINKS = [
-  { href: "#hero-section", label: "Home" },
-  { href: "#portfolio-section", label: "My portfolio" },
-  { href: "#about-me-section", label: "About me" },
-  { href: "#experience-section", label: "Experience" },
-  { href: "#education-section", label: "Education" },
-  { href: "#languages-section", label: "Languages" },
-  { href: "#skills-section", label: "Skills and tools" },
-  { href: "#socials-section", label: "My socials" },
+  { href: "#hero-section", key: "navbar.home" },
+  { href: "#portfolio-section", key: "navbar.portfolio" },
+  { href: "#about-me-section", key: "navbar.aboutMe" },
+  { href: "#experience-section", key: "navbar.experience" },
+  { href: "#education-section", key: "navbar.education" },
+  { href: "#languages-section", key: "navbar.languages" },
+  { href: "#skills-section", key: "navbar.skills" },
+  { href: "#socials-section", key: "navbar.socials" },
 ];
 
 function Navbar({ audioRef }) {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslation();
 
   return (
     <nav className="navbar">
@@ -23,7 +26,7 @@ function Navbar({ audioRef }) {
         className="navbar-toggle"
         aria-expanded={isOpen}
         aria-controls="navbar-links"
-        aria-label="Toggle navigation menu"
+        aria-label={t("navbar.toggleMenu")}
         onClick={() => setIsOpen((open) => !open)}
       >
         {isOpen ? "✕" : "☰"}
@@ -32,7 +35,7 @@ function Navbar({ audioRef }) {
         {NAV_LINKS.map((link) => (
           <li key={link.href}>
             <a href={link.href} onClick={() => setIsOpen(false)}>
-              {link.label}
+              {t(link.key)}
             </a>
           </li>
         ))}
@@ -42,6 +45,9 @@ function Navbar({ audioRef }) {
           </div>
           <div className="music-player">
             <MusicToggle audioRef={audioRef} />
+          </div>
+          <div className="lang-toggle-player">
+            <LangToggle />
           </div>
         </li>
       </ul>

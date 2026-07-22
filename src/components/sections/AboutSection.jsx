@@ -1,17 +1,16 @@
-const ABOUT_LINES = [
-  "Graduated as system engineer from U.T.N.",
-  "Proactive, reliable, team player, problem solver.",
-  "Friendly, communicative, outgoing.",
-  "Sports advocate, Nature lover, traveler.",
-];
+import useTranslation from "../../hooks/useTranslation.js";
+
+const ABOUT_LINE_KEYS = ["graduated", "proactive", "friendly", "sports"];
 
 function AboutSection() {
+  const { t } = useTranslation();
+
   return (
     <section className="main-section align-right" id="about-me-section">
-      <h1>About me</h1>
+      <h1>{t("about.title")}</h1>
       <div className="text">
-        {ABOUT_LINES.map((line) => (
-          <p key={line}>{line}</p>
+        {ABOUT_LINE_KEYS.map((key) => (
+          <p key={key}>{t(`about.lines.${key}`)}</p>
         ))}
       </div>
     </section>

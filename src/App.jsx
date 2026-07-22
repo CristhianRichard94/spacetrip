@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar.jsx";
 import AppLoader from "./components/AppLoader.jsx";
 import ChunkErrorBoundary from "./components/ChunkErrorBoundary.jsx";
 import { SceneModeProvider, useSceneModeContext } from "./context/SceneModeContext.jsx";
+import { LanguageProvider } from "./context/LanguageContext.jsx";
 import HeroSection from "./components/sections/HeroSection.jsx";
 import PortfolioSection from "./components/sections/PortfolioSection.jsx";
 import AboutSection from "./components/sections/AboutSection.jsx";
@@ -94,9 +95,11 @@ function App() {
   }, []);
 
   return (
-    <SceneModeProvider>
-      <AppContent audioRef={audioRef} mounted={mounted} />
-    </SceneModeProvider>
+    <LanguageProvider>
+      <SceneModeProvider>
+        <AppContent audioRef={audioRef} mounted={mounted} />
+      </SceneModeProvider>
+    </LanguageProvider>
   );
 }
 

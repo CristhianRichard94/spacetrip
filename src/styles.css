@@ -177,7 +177,8 @@ html {
 }
 
 .music-player,
-.visual-mode-player {
+.visual-mode-player,
+.lang-toggle-player {
   position: relative;
   display: flex;
   align-items: center;
@@ -271,6 +272,57 @@ html {
 }
 
 .visual-mode-tooltip.show {
+  opacity: 1;
+}
+
+.lang-toggle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #3b6fff;
+  background: #0a2342cc;
+  backdrop-filter: blur(4px);
+  color: #fafafa;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+}
+
+.lang-toggle:hover {
+  background: #3b6fff;
+  transform: scale(1.08);
+}
+
+.lang-toggle:active {
+  transform: scale(0.96);
+}
+
+.lang-toggle:focus-visible {
+  outline: 2px solid #3b6fff;
+  outline-offset: 2px;
+}
+
+.lang-toggle-tooltip {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: max-content;
+  max-width: 220px;
+  padding: 8px 12px;
+  background: #0a2342f0;
+  border: 1px solid #3b6fff;
+  border-radius: 8px;
+  font-size: 13px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.lang-toggle-tooltip.show {
   opacity: 1;
 }
 

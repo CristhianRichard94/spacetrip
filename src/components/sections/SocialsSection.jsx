@@ -1,3 +1,5 @@
+import useTranslation from "../../hooks/useTranslation.js";
+
 const SOCIALS = [
   {
     href: "https://www.instagram.com/cristhian.richard/",
@@ -17,10 +19,12 @@ const SOCIALS = [
 ];
 
 function SocialsSection() {
+  const { t } = useTranslation();
+
   return (
     <section className="main-section align-left" id="socials-section">
       <div className="text">
-        <h1>My socials</h1>
+        <h1>{t("socials.title")}</h1>
         <ul className="social-media">
           {SOCIALS.map((social) => (
             <li key={social.href}>

@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
+import useTranslation from "../hooks/useTranslation.js";
 
 function MusicToggle({ audioRef }) {
+  const { t } = useTranslation();
   const [muted, setMuted] = useState(true);
   const [showTooltip, setShowTooltip] = useState(false);
 
@@ -31,14 +33,14 @@ function MusicToggle({ audioRef }) {
     <>
       <button
         className="music-toggle"
-        aria-label="Toggle music"
+        aria-label={t("musicToggle.ariaLabel")}
         type="button"
         onClick={handleClick}
       >
         {muted ? "🔇" : "🔊"}
       </button>
       <span className={`music-tooltip${showTooltip ? " show" : ""}`}>
-        Unmute sound to get the full experience
+        {t("musicToggle.tooltip")}
       </span>
     </>
   );

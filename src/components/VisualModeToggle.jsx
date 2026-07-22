@@ -5,8 +5,10 @@ import {
   hasSeenSceneModeHint,
   markSceneModeHintSeen,
 } from "../context/SceneModeContext.jsx";
+import useTranslation from "../hooks/useTranslation.js";
 
 function VisualModeToggle() {
+  const { t } = useTranslation();
   const {
     mode,
     explicit,
@@ -66,7 +68,11 @@ function VisualModeToggle() {
     <>
       <button
         className="visual-mode-toggle"
-        aria-label={isEnhanced ? "Switch to classic view" : "Switch to enhanced view"}
+        aria-label={
+          isEnhanced
+            ? t("visualModeToggle.switchToClassic")
+            : t("visualModeToggle.switchToEnhanced")
+        }
         aria-pressed={isEnhanced}
         type="button"
         disabled={loading}
@@ -79,8 +85,8 @@ function VisualModeToggle() {
         role={fallbackNotice ? "status" : undefined}
       >
         {fallbackNotice
-          ? "Enhanced view was disabled after a display error"
-          : "Try the new enhanced view"}
+          ? t("visualModeToggle.fallbackNotice")
+          : t("visualModeToggle.tryHint")}
       </span>
     </>
   );

@@ -1,23 +1,15 @@
 import { useEffect, useRef, useState } from "react";
+import useTranslation from "../hooks/useTranslation.js";
 
 const MAX_MESSAGE_LENGTH = 500;
 const RESUME_URL = "/Cristhian_Richard_Resume_16-07.pdf";
 
-const INITIAL_MESSAGE = {
-  role: "assistant",
-  content:
-    "Hi! Ask me about Cristhian's experience, skills, education, or projects — or download his résumé below.",
-};
-
-const SUGGESTIONS = [
-  "What's his experience with React?",
-  "What projects has he worked on?",
-  "What's his DevOps background?",
-];
+const SUGGESTION_KEYS = ["react", "projects", "devops"];
 
 function Chatbot() {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  const [messages, setMessages] = useState([INITIAL_MESSAGE]);
+  const [messages, setMessages] = useState([{ role: "assistant", greeting: true }]);
   const [input, setInput] = useState("");
   const [status, setStatus] = useState("idle"); // idle | loading | error | rate-limited
   const [retryAfter, setRetryAfter] = useState(0);
@@ -90,7 +82,7 @@ function Chatbot() {
           {
             role: "assistant",
             variant: "rate-limited",
-            content: `Whoa, that's a lot of questions! Please slow down and try again in ${retrySeconds}s.`,
+            content: `${t("chatbot.rateLimitedPrefix")} ${retrySeconds}s.`,
           },
         ]);
         scrollToBottom();
@@ -105,7 +97,7 @@ function Chatbot() {
       setStatus("idle");
       setMessages((prev) => [
         ...prev,
-        { role: "assistant", content: data.reply || "Sorry, I didn't get a reply. Please try again." },
+        { role: "assistant", content: data.reply || t("chatbot.noReplyFallback") },
       ]);
       scrollToBottom();
     } catch (err) {
@@ -115,7 +107,7 @@ function Chatbot() {
         {
           role: "assistant",
           variant: "error",
-          content: "Something went wrong reaching the chat service. Please try again in a moment.",
+          content: t("chatbot.errorMessage"),
         },
       ]);
       scrollToBottom();
@@ -137,13 +129,13 @@ function Chatbot() {
   return (
     <div className="chatbot-widget">
       {open && (
-        <div className="chatbot-panel" role="dialog" aria-label="Ask about Cristhian's experience">
+        <div className="chatbot-panel" role="dialog" aria-label={t("chatbot.header")}>
           <div className="chatbot-panel-header">
-            <span>Ask about my experience</span>
+            <span>{t("chatbot.header")}</span>
             <button
               type="button"
               className="chatbot-close-btn"
-              aria-label="Close chat"
+              aria-label={t("chatbot.closeChat")}
               onClick={toggleOpen}
             >
               ✕
@@ -158,13 +150,15 @@ function Chatbot() {
                   msg.variant ? ` chatbot-message-${msg.variant}` : ""
                 }`}
               >
-                {msg.content}
+                {msg.greeting ? t("chatbot.greeting") : msg.content}
                 {msg.role === "assistant" && (
                   <button
                     type="button"
                     className="chatbot-copy-btn"
-                    aria-label="Copy message"
-                    onClick={() => handleCopy(index, msg.content)}
+                    aria-label={t("chatbot.copyMessage")}
+                    onClick={() =>
+                      handleCopy(index, msg.greeting ? t("chatbot.greeting") : msg.content)
+                    }
                   >
                     {copiedIndex === index ? "✓" : "⧉"}
                   </button>
@@ -173,24 +167,27 @@ function Chatbot() {
             ))}
             {status === "loading" && (
               <div className="chatbot-message chatbot-message-assistant chatbot-message-loading">
-                <span className="orbit-spinner" aria-hidden="true" /> Thinking…
+                <span className="orbit-spinner" aria-hidden="true" /> {t("chatbot.thinking")}
               </div>
             )}
           </div>
 
           {messages.length === 1 && (
             <div className="chatbot-suggestions">
-              {SUGGESTIONS.map((s) => (
-                <button
-                  key={s}
-                  type="button"
-                  className="chatbot-suggestion-btn"
-                  onClick={() => sendMessage(s)}
-                  disabled={status === "loading" || status === "rate-limited"}
-                >
-                  {s}
-                </button>
-              ))}
+              {SUGGESTION_KEYS.map((key) => {
+                const label = t(`chatbot.suggestions.${key}`);
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    className="chatbot-suggestion-btn"
+                    onClick={() => sendMessage(label)}
+                    disabled={status === "loading" || status === "rate-limited"}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
             </div>
           )}
 
@@ -201,7 +198,7 @@ function Chatbot() {
             target="_blank"
             rel="noreferrer"
           >
-            ⬇ Download résumé
+            ⬇ {t("chatbot.downloadResume")}
           </a>
 
           <form className="chatbot-input-row" onSubmit={handleSend}>
@@ -210,30 +207,32 @@ function Chatbot() {
               className="chatbot-input"
               placeholder={
                 status === "rate-limited"
-                  ? `Try again in ${retryAfter}s…`
-                  : "Ask about my experience…"
+                  ? `${t("chatbot.tryAgainIn")} ${retryAfter}s…`
+                  : t("chatbot.inputPlaceholder")
               }
               value={input}
               maxLength={MAX_MESSAGE_LENGTH}
               onChange={(e) => setInput(e.target.value)}
-              aria-label="Your question"
+              aria-label={t("chatbot.yourQuestion")}
               disabled={status === "loading" || status === "rate-limited"}
             />
             <button
               type="submit"
               className="chatbot-send-btn"
               disabled={status === "loading" || status === "rate-limited" || !input.trim()}
-              aria-label="Send question"
+              aria-label={t("chatbot.sendQuestion")}
             >
               ➤
             </button>
           </form>
           {status === "rate-limited" ? (
             <span className="chatbot-char-count chatbot-retry-countdown" role="status">
-              Try again in {retryAfter}s
+              {t("chatbot.tryAgainIn")} {retryAfter}s
             </span>
           ) : (
-            <span className="chatbot-char-count">{remaining} characters left</span>
+            <span className="chatbot-char-count">
+              {remaining} {t("chatbot.charactersLeft")}
+            </span>
           )}
         </div>
       )}
@@ -241,7 +240,7 @@ function Chatbot() {
       <button
         className="chatbot-toggle"
         type="button"
-        aria-label={open ? "Close chat" : "Open chat about my experience"}
+        aria-label={open ? t("chatbot.closeChat") : t("chatbot.openChat")}
         onClick={toggleOpen}
       >
         {open ? "✕" : "💬"}

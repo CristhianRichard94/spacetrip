@@ -1,3 +1,5 @@
+import useTranslation from "../hooks/useTranslation.js";
+
 function LoaderBoxes() {
   return (
     <>
@@ -10,6 +12,8 @@ function LoaderBoxes() {
 }
 
 function AppLoader({ exiting }) {
+  const { t } = useTranslation();
+
   return (
     <div className={`app-loader${exiting ? " exiting" : ""}`} aria-hidden={exiting}>
       <div className="loader-shutter top">
@@ -22,7 +26,7 @@ function AppLoader({ exiting }) {
       </div>
       <div className="loader-shutter bottom" />
       <p className="loader-label" role="status" aria-live="polite">
-        Initializing…
+        {t("loader.initializing")}
       </p>
     </div>
   );

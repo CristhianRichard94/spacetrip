@@ -1,33 +1,31 @@
-const DEGREES = [
-  { title: "University systems analyst", granted: "Granted: 20/09/2018" },
-  { title: "Information system engineer", granted: "Granted: 06/06/2019" },
-];
+import useTranslation from "../../hooks/useTranslation.js";
+
+const DEGREE_KEYS = ["systemsAnalyst", "infoEngineer"];
 
 function EducationSection() {
+  const { t } = useTranslation();
+
   return (
     <section className="main-section align-right" id="education-section">
-      <h1>Education</h1>
+      <h1>{t("education.title")}</h1>
       <div className="text">
         <ul>
           <li>
-            Universidad Tecnológica Nacional Regional Concepción del Uruguay
-            <p>Bachelors degree</p>
+            {t("education.institution")}
+            <p>{t("education.bachelors")}</p>
             <ul>
-              {DEGREES.map((degree) => (
-                <li key={degree.title}>
-                  <p>{degree.title}</p>
-                  <p>{degree.granted}</p>
+              {DEGREE_KEYS.map((key) => (
+                <li key={key}>
+                  <p>{t(`education.items.${key}.title`)}</p>
+                  <p>{t(`education.items.${key}.granted`)}</p>
                 </li>
               ))}
             </ul>
           </li>
           <li>
-            <p>
-              EET N°2 “Francisco Ramirez” Highschool -Technical degree
-              Degree:
-            </p>
-            <p>Electrician technician, industrial electronics oriented.</p>
-            <p>Term: 2007-2013</p>
+            <p>{t("education.highschool.degreeLabel")}</p>
+            <p>{t("education.highschool.technician")}</p>
+            <p>{t("education.highschool.term")}</p>
           </li>
         </ul>
       </div>
