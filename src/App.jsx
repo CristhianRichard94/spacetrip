@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import useSectionHighlight from "./hooks/useSectionHighlight";
 import Navbar from "./components/Navbar.jsx";
+import AppLoader from "./components/AppLoader.jsx";
 import ChunkErrorBoundary from "./components/ChunkErrorBoundary.jsx";
 import { SceneModeProvider, useSceneModeContext } from "./context/SceneModeContext.jsx";
 import HeroSection from "./components/sections/HeroSection.jsx";
@@ -16,10 +17,28 @@ const SceneRoot = lazy(() => import("./components/scene/SceneRoot.jsx"));
 const Chatbot = lazy(() => import("./components/Chatbot.jsx"));
 
 function AppContent({ audioRef, mounted }) {
-  const { resolved } = useSceneModeContext();
+  const { resolved, loading } = useSceneModeContext();
+  const [chunkReady, setChunkReady] = useState(false);
+  const [showLoader, setShowLoader] = useState(true);
+
+  useEffect(() => {
+    import("./components/scene/SceneRoot.jsx")
+      .then(() => setChunkReady(true))
+      .catch(() => setChunkReady(true));
+  }, []);
+
+  const sceneReady = resolved && chunkReady && !loading;
+
+  useEffect(() => {
+    if (!sceneReady || !showLoader) return undefined;
+    const timer = setTimeout(() => setShowLoader(false), 700);
+    return () => clearTimeout(timer);
+  }, [sceneReady, showLoader]);
 
   return (
     <>
+      {showLoader && <AppLoader exiting={sceneReady} />}
+
       {/* deferred past first paint: 32MB file, must not compete with LCP */}
       {mounted && (
         <audio ref={audioRef} autoPlay loop muted>

@@ -303,6 +303,135 @@ html {
   background: radial-gradient(circle at 50% 30%, #3b6fff33, #0a2342 70%);
 }
 
+.app-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.loader-shutter {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: #0a2342;
+  transition: transform 0.7s ease;
+}
+
+.loader-shutter.top {
+  top: 0;
+  z-index: 2;
+}
+
+.loader-shutter.top::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background: #3b6fff;
+  transition: left 0.6s ease 0.1s;
+}
+
+.loader-shutter.bottom {
+  bottom: 0;
+}
+
+.app-loader.exiting .loader-shutter.top {
+  transform: translateY(-100%);
+}
+
+.app-loader.exiting .loader-shutter.bottom {
+  transform: translateY(100%);
+}
+
+.app-loader.exiting .loader-shutter.top::before {
+  left: 100%;
+}
+
+.loader-circle {
+  position: absolute;
+  left: 50%;
+  bottom: -100px;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 50%;
+  transform: translateX(-50%) rotate(0deg);
+  animation: loader-spin 1.6s linear infinite;
+}
+
+.loader-circle.inner {
+  width: 150px;
+  height: 150px;
+  bottom: -75px;
+  animation-name: loader-spin-reverse;
+}
+
+.loader-circle::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 95%;
+  height: 95%;
+  border-radius: 50%;
+  background: #0a2342;
+  z-index: 2;
+}
+
+.loader-circle.inner::before {
+  background: #3b6fff66;
+}
+
+.loader-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: 0 0;
+  width: 200px;
+  height: 200px;
+  background: #3b6fff;
+  transform: rotate(var(--rotateVal)) skew(10deg);
+}
+
+@keyframes loader-spin {
+  to {
+    transform: translateX(-50%) rotate(360deg);
+  }
+}
+
+@keyframes loader-spin-reverse {
+  to {
+    transform: translateX(-50%) rotate(-360deg);
+  }
+}
+
+.app-loader.exiting .loader-circle {
+  animation-play-state: paused;
+}
+
+.loader-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  margin: 0;
+  color: #d7e3ffcc;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  transition: opacity 0.3s ease;
+}
+
+.app-loader.exiting .loader-label {
+  opacity: 0;
+}
+
 .main-section {
   height: 100vh;
   z-index: 2;
@@ -353,6 +482,21 @@ html {
 
   .orbit-spinner {
     animation-duration: 2.4s;
+  }
+
+  .loader-shutter {
+    transition: opacity 0.3s ease;
+  }
+
+  .app-loader.exiting .loader-shutter.top,
+  .app-loader.exiting .loader-shutter.bottom {
+    transform: none;
+    opacity: 0;
+  }
+
+  .loader-circle,
+  .loader-circle.inner {
+    animation: none;
   }
 }
 

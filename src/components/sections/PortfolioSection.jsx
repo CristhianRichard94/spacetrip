@@ -1,10 +1,10 @@
 const PROJECTS = [
-  { label: "Roomigos: Room finder Application", href: "/roomigos" },
-  { label: "Futsal Booking Application", href: "/futsal-manager" },
   {
     label: "AI Engineer Path: Project showcasing AI Skills",
     href: "/ai-engineer-path",
   },
+  { label: "Roomigos: Room finder Application", href: "/roomigos" },
+  { label: "Futsal Booking Application", href: "/futsal-manager" },
   { label: "Automakers: Landing page", href: "/automakers" },
   { label: "Spotify Code Generator: STL 3D print generator", href: "/spotify-code-gen" },
 ];
