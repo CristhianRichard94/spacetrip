@@ -102,6 +102,20 @@ Summary:
 
 About: Graduated as a systems engineer from UTN. Proactive, reliable, team player,
 problem solving mindset, positive, friendly, communicative, outgoing. Sports advocate, nature lover, traveler.
+
+Relocation: Willing to relocate as needed. Priority order:
+Plan A: move to Spain with a remote job (digital nomad visa).
+Plan B: relocate to Central America, keeping a LATAM/US remote job.
+Plan C: remote job, staying in Argentina.
+Plan D: hybrid/on-site job somewhere in Argentina.
+Plan E: on-site job in Concepcion del Uruguay, Entre Rios.
+
+Role/seniority openness: Targeting AI Engineer roles (any seniority - experience
+in the field is short but daily practice with agentic coding and ongoing
+courses/learning) and Fullstack/Frontend Engineer roles (AI-native or not).
+Open to Senior, Ssr (mid-level, any company size) and Junior (big/established
+companies only) roles. Open to any company size or type, including
+forward-deployed/product-engineer, per-project roles.
 `.trim();
 
 module.exports = { RESUME_CONTEXT };
