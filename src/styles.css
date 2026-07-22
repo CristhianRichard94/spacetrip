@@ -404,67 +404,28 @@ html {
   left: 100%;
 }
 
-.loader-circle {
+.loader-core {
   position: absolute;
   left: 50%;
   bottom: -100px;
   width: 200px;
   height: 200px;
-  overflow: hidden;
-  border-radius: 50%;
-  transform: translateX(-50%) rotate(0deg);
-  animation: loader-spin 1.6s linear infinite;
+  transform: translateX(-50%);
 }
 
-.loader-circle.inner {
-  width: 150px;
-  height: 150px;
-  bottom: -75px;
-  animation-name: loader-spin-reverse;
-}
-
-.loader-circle::before {
-  content: "";
+.loader-ring {
   position: absolute;
   top: 50%;
   left: 50%;
+  border-radius: 50%;
+  border: 3px solid #3b6fff33;
+  border-top-color: #3b6fff;
   transform: translate(-50%, -50%);
-  width: 95%;
-  height: 95%;
-  border-radius: 50%;
-  background: #0a2342;
-  z-index: 2;
 }
 
-.loader-circle.inner::before {
-  background: #3b6fff66;
-}
-
-.loader-box {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform-origin: 0 0;
-  width: 200px;
-  height: 200px;
-  background: #3b6fff;
-  transform: rotate(var(--rotateVal)) skew(10deg);
-}
-
-@keyframes loader-spin {
-  to {
-    transform: translateX(-50%) rotate(360deg);
-  }
-}
-
-@keyframes loader-spin-reverse {
-  to {
-    transform: translateX(-50%) rotate(-360deg);
-  }
-}
-
-.app-loader.exiting .loader-circle {
-  animation-play-state: paused;
+.app-loader.exiting .loader-core {
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .loader-label {
@@ -546,10 +507,6 @@ html {
     opacity: 0;
   }
 
-  .loader-circle,
-  .loader-circle.inner {
-    animation: none;
-  }
 }
 
 details summary {

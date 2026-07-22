@@ -8,8 +8,8 @@ function HeroSection() {
       <div className="text">
         <h1>{t("hero.title")}</h1>
         <p>{t("hero.description")}</p>
-        <p className="footnote">{t("hero.footnote")}</p>
       </div>
+      <p className="footnote">{t("hero.footnote")}</p>
     </section>
   );
 }
