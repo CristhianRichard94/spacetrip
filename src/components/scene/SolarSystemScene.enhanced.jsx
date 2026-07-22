@@ -1,5 +1,5 @@
-import { Suspense, useMemo, useRef, useState } from "react";
-import { Canvas } from "@react-three/fiber";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { EffectComposer, Bloom, DepthOfField } from "@react-three/postprocessing";
 import SunEnhanced from "./Sun.enhanced.jsx";
 import PlanetEnhanced from "./Planet.enhanced.jsx";
@@ -16,8 +16,49 @@ const WAYPOINT_DISTANCE = {
   ...Object.fromEntries(PLANETS.map((planet) => [planet.section, planet.orbitRadius])),
 };
 
+const AMBIENT_INTENSITY = 0.16;
+const DIRECTIONAL_INTENSITY = 0.35;
+const LIGHT_FADE_MS = 1200;
+
+// Meshes/textures pop in as they resolve behind the Suspense boundary below,
+// which looks like a glitch once the camera has moved away from the sun.
+// Fading lights up from 0 (instead of snapping to full intensity) once
+// content is actually mounted hides that pop-in instead of masking it.
+function FadeInLights({ active }) {
+  const ambientRef = useRef(null);
+  const directionalRef = useRef(null);
+  const startRef = useRef(null);
+
+  useFrame(() => {
+    if (!active || !ambientRef.current || !directionalRef.current) return;
+    if (startRef.current === null) startRef.current = performance.now();
+    const t = Math.min((performance.now() - startRef.current) / LIGHT_FADE_MS, 1);
+    const eased = t * t * (3 - 2 * t);
+    ambientRef.current.intensity = AMBIENT_INTENSITY * eased;
+    directionalRef.current.intensity = DIRECTIONAL_INTENSITY * eased;
+  });
+
+  return (
+    <>
+      <ambientLight ref={ambientRef} intensity={0} />
+      <directionalLight ref={directionalRef} position={[0, 3, 2]} intensity={0} castShadow />
+    </>
+  );
+}
+
+// Suspense only mounts its children once every resource inside has resolved,
+// so this effect firing is the actual "content ready" signal — earlier than
+// that (e.g. Canvas onCreated) the meshes/textures are still streaming in.
+function ContentReadyMarker({ onReady }) {
+  useEffect(() => {
+    onReady();
+  }, [onReady]);
+  return null;
+}
+
 function SolarSystemSceneEnhanced({ prefersReducedMotion, lowPower, onContextLost, onReady }) {
   const webGLAvailable = true;
+  const [contentReady, setContentReady] = useState(false);
   const [activeSection, setActiveSection] = useState("hero-section");
   const objectRefs = useRef({});
   const registerRef = (section, object) => {
@@ -57,12 +98,10 @@ function SolarSystemSceneEnhanced({ prefersReducedMotion, lowPower, onContextLos
           },
           { once: true }
         );
-        onReady?.();
       }}
     >
       <color attach="background" args={["#050b1f"]} />
-      <ambientLight intensity={0.16} />
-      <directionalLight position={[0, 3, 2]} intensity={0.35} castShadow />
+      <FadeInLights active={contentReady} />
       <StarsEnhanced lowPower={lowPower} />
       <ShootingStar prefersReducedMotion={prefersReducedMotion} />
       {PLANETS.map((planet) => (
@@ -82,6 +121,12 @@ function SolarSystemSceneEnhanced({ prefersReducedMotion, lowPower, onContextLos
         ))}
         <AsteroidBeltEnhanced prefersReducedMotion={prefersReducedMotion} lowPower={lowPower} />
         {!lowPower && <CometEnhanced prefersReducedMotion={prefersReducedMotion} />}
+        <ContentReadyMarker
+          onReady={() => {
+            setContentReady(true);
+            onReady?.();
+          }}
+        />
       </Suspense>
       <ScrollCameraRig
         prefersReducedMotion={prefersReducedMotion}
