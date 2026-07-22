@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from "react";
+import { memo, useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import useSafeFrame from "./useSafeFrame.js";
 
@@ -127,4 +127,4 @@ function SunEnhanced({ prefersReducedMotion, registerRef }) {
   );
 }
 
-export default SunEnhanced;
+export default memo(SunEnhanced);

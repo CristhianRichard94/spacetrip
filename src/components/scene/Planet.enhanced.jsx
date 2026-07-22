@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { memo, useEffect, useRef } from "react";
 import { useLoader } from "@react-three/fiber";
 import { TextureLoader } from "three";
 import Moon from "./Moon.jsx";
@@ -64,4 +64,4 @@ function PlanetEnhanced({ planet, prefersReducedMotion, isActive, registerRef, l
   );
 }
 
-export default PlanetEnhanced;
+export default memo(PlanetEnhanced);

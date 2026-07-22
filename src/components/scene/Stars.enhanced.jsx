@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { useLoader } from "@react-three/fiber";
 import { TextureLoader } from "three";
 import * as THREE from "three";
@@ -26,4 +27,4 @@ function StarsEnhanced({ lowPower }) {
   );
 }
 
-export default StarsEnhanced;
+export default memo(StarsEnhanced);

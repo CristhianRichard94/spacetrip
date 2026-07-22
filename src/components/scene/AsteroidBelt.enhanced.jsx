@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react";
+import { memo, useMemo, useRef } from "react";
 import * as THREE from "three";
 import useSafeFrame from "./useSafeFrame.js";
 
@@ -55,4 +55,4 @@ function AsteroidBeltEnhanced({ prefersReducedMotion, lowPower }) {
   );
 }
 
-export default AsteroidBeltEnhanced;
+export default memo(AsteroidBeltEnhanced);

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { memo, useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import Moon from "./Moon.jsx";
 
@@ -38,4 +38,4 @@ function Planet({ planet, prefersReducedMotion, isActive, registerRef }) {
   );
 }
 
-export default Planet;
+export default memo(Planet);

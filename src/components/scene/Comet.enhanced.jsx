@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { memo, useRef } from "react";
 import { Trail } from "@react-three/drei";
 import * as THREE from "three";
 import useSafeFrame from "./useSafeFrame.js";
@@ -39,4 +39,4 @@ function CometEnhanced({ prefersReducedMotion }) {
   );
 }
 
-export default CometEnhanced;
+export default memo(CometEnhanced);
