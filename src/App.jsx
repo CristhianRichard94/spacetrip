@@ -14,6 +14,7 @@ import SkillsSection from "./components/sections/SkillsSection.jsx";
 import SocialsSection from "./components/sections/SocialsSection.jsx";
 
 const SceneRoot = lazy(() => import("./components/scene/SceneRoot.jsx"));
+const ClassicSceneFallback = lazy(() => import("./components/scene/SolarSystemScene.jsx"));
 const Chatbot = lazy(() => import("./components/Chatbot.jsx"));
 
 function AppContent({ audioRef, mounted }) {
@@ -50,7 +51,17 @@ function AppContent({ audioRef, mounted }) {
       <Navbar audioRef={audioRef} />
       {resolved && (
         <ChunkErrorBoundary>
-          <Suspense fallback={null}>
+          {/* SceneRoot's chunk bundles both classic + enhanced scenes and
+              can take several seconds to download. Show the lighter classic
+              scene (its own chunk) as an instant stand-in so the page never
+              goes blank, then swap in SceneRoot once it's ready. */}
+          <Suspense
+            fallback={
+              <Suspense fallback={null}>
+                <ClassicSceneFallback />
+              </Suspense>
+            }
+          >
             <SceneRoot />
           </Suspense>
         </ChunkErrorBoundary>
