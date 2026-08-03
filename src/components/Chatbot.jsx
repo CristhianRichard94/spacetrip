@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import useTranslation from "../hooks/useTranslation.js";
 
 const MAX_MESSAGE_LENGTH = 500;
-const RESUME_URL = "/Cristhian_Richard_Resume_16-07.pdf";
+const RESUME_URL = "/Cristhian_Richard_Resume.pdf";
 
 const SUGGESTION_KEYS = ["react", "projects", "devops"];
 
