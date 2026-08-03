@@ -4,118 +4,125 @@
 
 const RESUME_CONTEXT = `
 Name: Cristhian Richard.
-Role: Senior Fullstack AI Engineer / Software Engineer.
-
-Education:
-- Universidad Tecnológica Nacional (UTN), Regional Concepción del Uruguay, Argentina.
-  - Information System Engineer, granted 06/06/2019.
-  - University Systems Analyst (Mid degree), granted 20/09/2018.
-- EET N°2 "Francisco Ramirez" Highschool - Technical degree, Electrician technician,
-  industrial electronics oriented, 2007-2013.
-
-Experience:
-- Freelance software engineer, since 05/2025.
-  - Worked in several projects building from scratch, including:
-    - Built Next.js + Tailwind serverless webapp to manage users, products, categories and orders for a small business, using Supabase as backend and database.
-    - Built Make automations for small businesses, including automations to create invoices in PDF and send them by email, create and update products in a database, and send notifications to users.
-
-- Senior Fullstack AI Engineer at Media.Monks, 01/2021 - 05/2025. (Started as Mid Frontend, promoted to Senior Fullstack Engineer in 2024 and ended up as Senior Fullstack AI Engineer in 2025).
-  - Worked in several projects, always using Scrum methodology, including:
-    - Built from scratch a complex Angular frontend +python (wrapper connected to Kintaro CMS) application that allowed Google marketeers to build sites from a drag and drop UI, setting up customizable components that must follow G standards, pages that later on get bundled on a node server and deployed to GCP. I lead the frontend development, jump in backend tasks and managed deployments in GCP environment for two years.
-    - Built from scratch a React+python called scorecard that allowed Google marketeers to visualize marketing sites scoring across different metrics, markets and regions.
-    - Worked in an Angular Playbook application that documented the best practices for building marketing sites and using web components.
-    - Built from scratch a React+python game application in a tight deadline for an android version release featuring F1, developing a set of games in javascript. Live in: https://www.android.com/android-15-games/?utm_source=facebook&utm_medium=social&utm_campaign=i/o_fb_social&linkId=9852027&fbclid=IwZXh0bgNhZW0CMTAAYnJpZBExc2NFREVjOUJzWkx4YmE5MwEe4JzKs6PTNVDCmkHzKRfT3vGbMFiOcx1D48gsHzC_AfvB5Ue9QAKA7LTAp7M_aem_5nlH3zFxx63jIqjc9S9Mbw
-    - Built email templates for Google marketing campaigns using html and css following Google standards.
-    - Setup and execute a workflow to fetch 20k sites metadata from google.developers sitemaps.xml, store them in sheets and then using Gemini LLM Python API generate a better set of titles and descriptions for each site using a structured prompt and a extensive list of examples as context, then update the sheets with the new data and finally update the sites metadata using a python script that used Google API to update the sites metadata. Saving a huge amount of time in rewriting and updating metadata for sites didn't have a proper title and description.
-    - Contributed in the development of a Complex Vue.js frontend + nest.js backend multi-tenant application to create and edit AI-Video ads for Google marketing campaigns, using Gemini/Open AI to generate videos and scripts.
-    - Setup and execute a workflow to generate copies for Google marketing sites, once using a fine-tuned model I had to train with a dataset of copies made by copywriters and a second time using Gemini Gems, giving structured prompts, system instructions and guidelines documents as context. The workflow included feedback from copywriters I feed the gem back in a versioned iterative process until standards were met. This tool was used then to generate copies for sites saving writers 60% iof their time by only reviewing copy.
-- Fullstack Developer at SIDESYS IT Solutions, 06/2019 - 01/2021.
-  - Worked in several projects, always using Scrum methodology, including:
-    -Contributed to the development of a multi-tenant cashier multi-queue system for banks, using Angular, web-components in Vue.js and a complex multilayer backend in .NET Framework connected to MySQL db.
-    -Developed and bugfixed several applications in webforms and MVC.
-    -Built from scratch a multi-tenant Angular web application to answer surveys and send the results to a backend in .NET Framework connected to a MySQL db.
-    -Built a multi-tenant web application in Angular to create and  manage appointments, connected to a backend in .NET Framework.
-- Scholar/researcher in a database research group at FRCU-UTN, since 03/2018.
-  - Worked in several research projects, including:
-    -Built a client in vue.js, server in python with flask, using celery as broker and redis a queue db, an app to stream tweets by keywords and store them in a mongo database for later analysis. Repo: https://github.com/GIBD/tweets-harvester
-    -Built a python script to analyze the tweets stored in the database, and generate a report with the most relevant information. Repo: https://github.com/CristhianRichard94/tweets-evaluator
-Personal/side projects:
-- Roomigos(https://github.com/CristhianRichard94/roomigos): Next.js 14 + React 18 + TypeScript web app, Tailwind CSS 4, shadcn/Radix UI components, Firebase for messaging/chat, react-hook-form + zod for forms/validation. Single Next.js App Router app deployed on Vercel.
-- Financial Assistant (https://github.com/CristhianRichard94/Financial-Assistant): pnpm monorepo — Next.js 15 frontend/API plus a separate Python RAG backend (FastAPI, Claude for answer synthesis, OpenAI embeddings, Supabase/pgvector for vector storage). Infrastructure defined with AWS CDK. Used git worktrees to work on multiple parallel features/branches at once.
-- AI Engineer Path(https://github.com/CristhianRichard94/ai-engineer-path): a learning repo of several independent AI-focused apps, including an MCP (Model Context Protocol) server for task tracking and another MCP server for media/transcription tooling, a RAG-based document bot (Flask + Next.js + Celery + Qdrant), a voice assistant pipeline (speech-to-text -> GPT -> text-to-speech), and an OpenAI-powered chat app.
-- Spotify Code Generator(https://github.com/CristhianRichard94/Spotify-Code-Generator): Python/Flask backend with rate limiting (Flask-Limiter), Three.js frontend, OpenSCAD used to generate SVG/STL files, deployed via Docker to Fly.io.
-- Spacetrip(https://github.com/CristhianRichard94/spacetrip): this site — React 18 + Vite, React Three Fiber/Drei/postprocessing (Three.js scenes), GSAP for scroll animation, Tailwind CSS. Consumes a separate design-system project as local packages.
-- Design System(https://github.com/CristhianRichard94/design-system): pnpm workspace monorepo with a design-tokens package, a shared UI component package, and a showcase app; used as a shared dependency by other personal projects such as Spacetrip.
-- Futsal Manager(https://github.com/CristhianRichard94/futsal-manager): two-service app — FastAPI + SQLAlchemy + PostgreSQL + JWT auth backend, and a Next.js + NextAuth (Google OAuth) frontend with Mercado Pago payment integration.
-
-Skills:
-- Frontend: HTML5, CSS3, JavaScript, TypeScript, Angular, React, Next.js, Lit, Vue.js, Three.js.
-  Holds Microsoft Exam 70-480 certification.
-- Backend: Node.js, Python, .NET Framework, SQL, MongoDB.
-- DevOps: Git, GitHub, Docker, Vercel, GCP, Fly.io, AWS: IAM ECS2 CDK S3.
-
-Courses:
-- Udemy
-  - Advanced Angular by Fernando Herrera, Udemy, 2020.
-- DeepLearning.ai
-    - MCP: Build Rich-Context AI Apps with Anthropic - jun. 2026
-    - Claude Code: A Highly Agentic Coding Assistant - jun. 2026
-    - Agentic AI - jun. 2026
-    - Generative AI for Software Development - jun. 2026
-- Linkedin Learning
-  - Programming Foundations: Secure Coding (2018) - Dec 2024
-  - React.js Essential Training (2020) - Nov 2020
-  - Learning JavaScript Animations with GreenSock - Oct 2021
-  - Penetration Testing: Advanced Web Testing (2018) - Sep 2021
-  - Web Security: Same-Origin Policies - May 2019
-  - Python Essential Training - Apr 2024
-  - GraphQL Essential Training (2022) - Jun 2022
-  - Building RESTful APIs with Flask - Aug 2019
-  - Programming Foundations: Web Security (2019) - May 2019
-  - React: Creating and Hosting a Full-Stack Site (2022) - Sep 2022
-  - React.js: Building an Interface - Apr 2021
-  - React.js Essential Training - May 2022
-  - Learning Threat Modeling for Security Professionals - Jul 2024
-  - Learning the OWASP Top 10 - Aug 2024
-  - JavaScript: Patterns - Oct 2025
-  - Web Security: User Authentication an 2019
-  - JavaScript: Security Essentials (2019) - Jan 2019
-  - TypeScript Essential Training (2016) - May 2016
-  - Preventing Harassment in the Workplace
-  - Fighting Gender Bias at Work - Apr 2019
-  - Out and Proud: Approaching LGBT Issues in the Workplace - Jun 2020 (Retired)
-  - Communicating about Culturally Sensitive Issues (2022)
-  - Unconscious Bias (2017) - May 2017
-...Among others
-
-
-Languages:
--Spanish (native)
--English (fluent) => Taken IELTS Exam with C1 Advanced qualification - 02/2025
+Role: Fullstack AI Developer (Senior). Angular · Lit.js · Python · GCP.
+Location: Argentina, Remote. Contact: richardcristhian94@gmail.com, +54 3442 689884.
+linkedin.com/in/cristhian-richard-bb9060174 | cristhian-richard.com | github.com/CristhianRichard94
 
 Summary:
-- Started working with Angular in 2018 at University, continued in Sidesys IT Solutions and Media.Monks,
-- Learned React While in Media.Monks around 2022 and Next.js around 2024,
-- Been learning about Neural Networks, Machine Learning, AI, LLMs, Fine tunning models, RAGs since 2024 with a previous background at university and database research group work.
-- Learned Python in 2018 at University, went deep in Media.Monks on 2021 and personal projects. Using it since then.
-- Started using Node as backend in 2022 for Media.Monks projects, using it since then.
+Fullstack Developer with 6+ years of experience building production web applications with
+Angular and Lit.js, backed by Python and Node.js APIs on GCP, plus React and Next.js experience
+through personal projects. Contributed to ~15 projects at Media.Monks across cross-functional,
+English-speaking teams of 1 to 12, including AI-powered metadata pipelines for 20,000+ websites
+and a RAG system built for AI-driven marketing copy generation. Comfortable owning projects end
+to end, from architecture to deployment.
+
+Education:
+- Universidad Tecnológica Nacional (UTN), Concepción del Uruguay, Argentina.
+  - Information Systems Engineer, 2014 - 2019 (granted 06/06/2019).
+
+Experience:
+- Freelance Software Engineer, 06/2025 - present.
+  - Built Caseritas, a Next.js cloud-native management app for a wholesale rotisería client:
+    automated inventory tracking, order workflows, and role-based profiles (admin, sales, kitchen),
+    reducing manual, repetitive operational tasks.
+  - Designed and deployed AI-powered automation workflows (Make) for small businesses, including
+    automated social media content generation and intelligent email response systems.
+  - Developed high-converting landing pages for small businesses using modern frontend
+    technologies, supporting digital presence and customer acquisition.
+
+- Media.Monks, 01/2021 - 06/2025 (4 years 6 months, Remote).
+  - Fullstack AI Developer, 04/2025 - 06/2025 (3 months; title formalized, AI work began mid-2024).
+    - Engineered AI-powered metadata generation pipelines for over 20,000 websites using Vertex AI
+      on GCP, producing enriched metadata to improve content discoverability and SEO accuracy.
+    - Iterated on an AI-powered marketing copy generation solution: started by generating copy
+      directly with a fine-tuned Gemini model, by myself, evolved it into a version-controlled
+      workflow for managing instructions, documents, and prompts through Gemini Gems, and
+      ultimately built a RAG system using GCP technologies to ground copy generation in reference
+      documents.
+  - Senior Frontend Developer, 05/2023 - 04/2025 (2 years).
+    - Promoted to Senior after leading full-lifecycle development of complex Angular applications,
+      including a dynamic marketing site builder used by a Fortune 500 marketing team.
+    - Built a Scorecard Lit.js internal-use app responsible for displaying dynamic, interactive
+      tables with site scores.
+    - Delivered Lit.js and Python-based live events and game experiences as part of marketing
+      campaigns.
+    - Contributed to building a multi-tenant AI campaign management platform using Vue.js and
+      Nest.js.
+    - Created and deployed GCP Cloud Functions and App Engine services, managing versioning and
+      IAM permissions.
+    - Took on backend ownership across Python services, expanding beyond the original frontend
+      scope of the role.
+  - Frontend Developer, 01/2021 - 05/2023 (2 years 5 months).
+    - Built and evolved a complex Angular and Python-driven CMS site builder used internally by a
+      Fortune 500 marketing team.
+    - Implemented server-side rendering for the site builder using Angular Universal with a
+      minimalist approach: stripped unused CSS (keeping only visible-component styles) and unused
+      JS from the bundle, and added lightweight client scripts scoped to each component's exact
+      needs (e.g., binding scroll listeners for a carousel), significantly cutting bundle size and
+      page load time.
+
+- Sidesys IT Solutions, Frontend Developer, 06/2019 - 01/2021 (1 year 8 months).
+  - Built features on an Angular-based Cashier Application connected to a large-scale queue
+    management .NET Framework system, streamlining customer queues and improving branch
+    efficiency.
+  - Modernized legacy Web Forms applications by integrating reusable Vue.js Web Components,
+    improving modularity and maintainability.
+  - Developed a multi-step survey application and an appointment management frontend using
+    Angular, integrating with a .NET Framework backend via OpenAPI to improve client scheduling
+    efficiency.
+
+Personal projects:
+- Multi-agent Claude Code workflow — custom setup with specialized agents (software-engineer, QA,
+  security, UX, UI) orchestrated via SubagentStop hooks; used across recent freelance and personal
+  projects.
+- AI Engineer Path (github.com/CristhianRichard94/ai-engineer-path) — MCP servers (task tracking,
+  media/transcription), RAG doc bot (Flask, Next.js, Celery, Qdrant), voice assistant pipeline
+  (STT/GPT/TTS), OpenAI-powered chat app.
+- Roomigos (github.com/CristhianRichard94/roomigos) — Next.js 14 + React 18 + TypeScript, Tailwind
+  CSS 4, shadcn/Radix UI, Firebase messaging, react-hook-form + zod. Deployed on Vercel.
+- Spacetrip (github.com/CristhianRichard94/spacetrip) — this site. React 18, Vite, React Three
+  Fiber/Drei/postprocessing, GSAP, Tailwind CSS. Interactive 3D portfolio, consumes a separate
+  design-system project as local packages.
+- Design System (github.com/CristhianRichard94/design-system) — pnpm workspace monorepo with a
+  design-tokens package, shared UI component package, and showcase app; shared dependency for
+  other personal projects such as Spacetrip.
+- Futsal Manager (github.com/CristhianRichard94/futsal-manager) — FastAPI + SQLAlchemy +
+  PostgreSQL + JWT backend, Next.js + NextAuth (Google OAuth) frontend, Mercado Pago payments.
+- Spotify Code Generator (github.com/CristhianRichard94/Spotify-Code-Generator) — Python/Flask
+  backend with Flask-Limiter, Three.js frontend, OpenSCAD SVG/STL generation, Docker on Fly.io.
+
+Certifications:
+- English C1 Proficiency (IELTS), 02/2025.
+- Claude Code: A Highly Agentic Coding Assistant — DeepLearning.AI, 06/2026.
+- MCP: Build Rich-Context AI Apps with Anthropic — DeepLearning.AI, 06/2026.
+- Agentic AI — DeepLearning.AI, 06/2026.
+- Generative AI for Software Development — DeepLearning.AI, 06/2026.
+- Retrieval Augmented Generation (RAG) — DeepLearning.AI, 07/2026.
+
+Technical skills:
+- Frontend/Backend: Angular, Lit.js, React, Next.js, Vue.js, TypeScript, Python, Node.js,
+  .NET Framework, RESTful APIs, Flask.
+- Cloud & DevOps: GCP (Cloud Functions, Vertex AI), AWS, Docker, CI/CD, Microservices.
+- AI & ML: LLM Integration, RAG, Agentic AI, MCP, Prompt Engineering, Fine-tuning, Vector DBs.
+
+Languages:
+- Spanish (native).
+- English (fluent) — IELTS C1 Advanced, 02/2025.
 
 About: Graduated as a systems engineer from UTN. Proactive, reliable, team player,
-problem solving mindset, positive, friendly, communicative, outgoing. Sports advocate, nature lover, traveler.
+problem-solving mindset, direct and honest communicator.
 
 Relocation: Willing to relocate as needed. Priority order:
 Plan A: move to Spain with a remote job (digital nomad visa).
 Plan B: relocate to Central America, keeping a LATAM/US remote job.
 Plan C: remote job, staying in Argentina.
 Plan D: hybrid/on-site job somewhere in Argentina.
-Plan E: on-site job in Concepcion del Uruguay, Entre Rios.
+Plan E: on-site job in Concepción del Uruguay, Entre Ríos.
 
-Role/seniority openness: Targeting AI Engineer roles (any seniority - experience
-in the field is short but daily practice with agentic coding and ongoing
-courses/learning) and Fullstack/Frontend Engineer roles (AI-native or not).
-Open to Senior, Ssr (mid-level, any company size) and Junior (big/established
-companies only) roles. Open to any company size or type, including
-forward-deployed/product-engineer, per-project roles.
+Role/seniority openness: Targeting Senior Fullstack Developer roles (Angular-heavy or general
+fullstack) and AI Engineer roles where a strong engineering foundation matters as much as
+AI-specific tenure. Open to Senior, Mid, Junior (big companies only) roles, any company size or
+type, including forward-deployed/product-engineer roles.
 `.trim();
 
 module.exports = { RESUME_CONTEXT };
