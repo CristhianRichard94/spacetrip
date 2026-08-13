@@ -16,10 +16,10 @@ export function useTranslation() {
 
   const t = (key) => {
     const value = lookup(translations[language], key);
-    if (typeof value === "string") return value;
+    if (typeof value === "string" || Array.isArray(value)) return value;
 
     const fallback = lookup(translations.en, key);
-    if (typeof fallback === "string") return fallback;
+    if (typeof fallback === "string" || Array.isArray(fallback)) return fallback;
 
     return key;
   };

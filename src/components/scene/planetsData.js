@@ -33,7 +33,7 @@ export const PLANETS = [
     orbitSpeed: 0.12,
     spinSpeed: 0.55,
     size: 0.34,
-    color: "#3b6fff",
+    color: "#4f8cff",
     texture: "/textures/2k_earth_daymap.jpg",
     initialAngle: 2.6,
   },

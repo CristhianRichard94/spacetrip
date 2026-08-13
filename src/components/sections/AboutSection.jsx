@@ -9,6 +9,7 @@ function AboutSection() {
     <section className="main-section align-right" id="about-me-section">
       <h1>{t("about.title")}</h1>
       <div className="text">
+        <p className="about-summary">{t("about.summary")}</p>
         {ABOUT_LINE_KEYS.map((key) => (
           <p key={key}>{t(`about.lines.${key}`)}</p>
         ))}

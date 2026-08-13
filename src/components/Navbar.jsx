@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import MusicToggle from "./MusicToggle.jsx";
 import VisualModeToggle from "./VisualModeToggle.jsx";
 import LangToggle from "./LangToggle.jsx";
 import useTranslation from "../hooks/useTranslation.js";
+
+const RESUME_URL = "/Cristhian_Richard_Resume.pdf";
 
 const NAV_LINKS = [
   { href: "#hero-section", key: "navbar.home" },
@@ -18,9 +20,21 @@ const NAV_LINKS = [
 function Navbar({ audioRef }) {
   const [isOpen, setIsOpen] = useState(false);
   const { t } = useTranslation();
+  const navRef = useRef(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handlePointerDown = (event) => {
+      if (navRef.current && !navRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
+  }, [isOpen]);
 
   return (
-    <nav className="navbar">
+    <nav className="navbar" ref={navRef}>
       <button
         type="button"
         className="navbar-toggle"
@@ -40,6 +54,15 @@ function Navbar({ audioRef }) {
           </li>
         ))}
         <li className="controls-stack">
+          <a
+            className="navbar-resume-link"
+            href={RESUME_URL}
+            download
+            target="_blank"
+            rel="noreferrer"
+          >
+            ⬇ {t("chatbot.downloadResume")}
+          </a>
           <div className="visual-mode-player">
             <VisualModeToggle />
           </div>

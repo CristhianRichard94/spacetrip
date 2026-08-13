@@ -4,12 +4,12 @@ import usePrefersReducedMotion from "../hooks/usePrefersReducedMotion.js";
 import useVariableSpin from "../hooks/useVariableSpin.js";
 
 const RINGS = [
-  { size: 170, minSpeed: 25, maxSpeed: 85, direction: 1 },
-  { size: 125, minSpeed: 35, maxSpeed: 120, direction: -1 },
-  { size: 80, minSpeed: 55, maxSpeed: 160, direction: 1 },
+  { size: 170, minSpeed: 25, maxSpeed: 85, direction: 1, strokeWidth: 2 },
+  { size: 125, minSpeed: 35, maxSpeed: 120, direction: -1, strokeWidth: 3 },
+  { size: 80, minSpeed: 55, maxSpeed: 160, direction: 1, strokeWidth: 4 },
 ];
 
-function LoaderRing({ size, minSpeed, maxSpeed, direction, active }) {
+function LoaderRing({ size, minSpeed, maxSpeed, direction, strokeWidth, active }) {
   const ringRef = useRef(null);
   useVariableSpin(ringRef, { active, minSpeed, maxSpeed, direction });
 
@@ -17,7 +17,7 @@ function LoaderRing({ size, minSpeed, maxSpeed, direction, active }) {
     <div
       ref={ringRef}
       className="loader-ring"
-      style={{ width: size, height: size }}
+      style={{ width: size, height: size, borderWidth: strokeWidth }}
     />
   );
 }

@@ -13,12 +13,17 @@ export const translations = {
     },
     hero: {
       title: "Welcome",
+      role: "Fullstack AI Developer (Senior)",
       description:
-        "An interactive résumé that doubles as a solar system: scroll through it to explore Cristhian Richard's experience, skills, and projects.",
+        "You can find Cristhian Richard's experience, projects, and related information by scrolling through this interactive résumé, built as a solar system.",
+      location: "Argentina · Remote-OK, open to relocate",
+      email: "richardcristhian94@gmail.com",
       footnote: "Made with ❤️ by Cristhian Richard",
     },
     about: {
       title: "About me",
+      summary:
+        "Fullstack Developer with 6+ years of experience building production web applications with Angular and Lit.js, backed by Python and Node.js APIs on GCP, plus React and Next.js experience through personal projects. Comfortable owning projects end to end, from architecture to deployment.",
       lines: {
         graduated: "Graduated as system engineer from U.T.N.",
         proactive: "Proactive, reliable, team player, problem solver.",
@@ -52,18 +57,66 @@ export const translations = {
     experience: {
       title: "Experience",
       items: {
-        freelance: { title: "Working Freelance", term: "Since 05/2025" },
+        freelance: {
+          title: "Freelance Software Engineer",
+          term: "Since 06/2025",
+          bullets: [
+            "Built Caseritas, a Next.js cloud-native management app for a wholesale food-service client: automated inventory tracking, order workflows, and role-based profiles (admin, sales, kitchen).",
+            "Designed and deployed AI-powered automation workflows (Make) for small businesses, including automated social media content generation and intelligent email response systems.",
+            "Developed high-converting landing pages for small businesses using modern frontend technologies.",
+          ],
+        },
         mediaMonks: {
-          title: "Senior Fullstack AI Engineer at Media.Monks",
-          term: "Term: 01/2021 - 05/2025",
+          company: "Media.Monks",
+          term: "Term: 01/2021 - 05/2025 · 4 yrs 4 mos · Remote",
+          roles: [
+            {
+              title: "Fullstack AI Developer",
+              term: "Apr 2025 - May 2025 · 2 mos (title formalized; AI work began mid-2024)",
+              bullets: [
+                "Engineered AI-powered metadata generation pipelines for over 20,000 websites using Vertex AI on GCP, improving content discoverability and SEO accuracy.",
+                "Iterated on an AI-powered marketing copy generation solution: started by generating copy directly with a fine-tuned Gemini model, evolved it into a version-controlled workflow through Gemini Gems, and ultimately built a RAG system on GCP to ground copy generation in reference documents.",
+              ],
+            },
+            {
+              title: "Senior Frontend Developer",
+              term: "May 2023 - Apr 2025 · 2 yrs",
+              bullets: [
+                "Promoted to Senior after leading full-lifecycle development of complex Angular applications, including a dynamic marketing site builder used by a Fortune 500 marketing team.",
+                "Built a Scorecard Lit.js internal-use app for displaying dynamic, interactive tables with site scores.",
+                "Delivered Lit.js and Python-based live events and game experiences as part of marketing campaigns.",
+                "Contributed to a multi-tenant AI campaign management platform using Vue.js and Nest.js.",
+                "Created and deployed GCP Cloud Functions and App Engine services, managing versioning and IAM permissions.",
+                "Took on backend ownership across Python services, expanding beyond the original frontend scope of the role.",
+              ],
+            },
+            {
+              title: "Frontend Developer",
+              term: "Jan 2021 - May 2023 · 2 yrs 5 mos",
+              bullets: [
+                "Built and evolved a complex Angular and Python-driven CMS site builder used internally by a Fortune 500 marketing team.",
+                "Implemented server-side rendering for the site builder using Angular Universal with a minimalist approach: stripped unused CSS/JS from the bundle and scoped lightweight client scripts to each component's exact needs, significantly cutting bundle size and page load time.",
+              ],
+            },
+          ],
         },
         sidesys: {
-          title: "Fullstack Developer at SIDESYS IT Solutions",
+          title: "Frontend Developer at SIDESYS IT Solutions",
           term: "Term: 06/2019 - 01/2021",
+          bullets: [
+            "Built features on an Angular-based Cashier Application connected to a large-scale queue management .NET Framework system.",
+            "Modernized legacy Web Forms applications by integrating reusable Vue.js Web Components, improving modularity and maintainability.",
+            "Developed a multi-step survey application and an appointment management frontend using Angular, integrating with a .NET Framework backend via OpenAPI.",
+          ],
+        },
+        research: {
+          title: "Research Scholar, University Research Group (FRCU-UTN)",
+          term: "Since 03/2018",
+          bullets: [
+            "Performed as a scholar within a database research group at FRCU-UTN.",
+          ],
         },
       },
-      research:
-        "University Research Group Since 03/2018 Perform as a scholar within a database research group of FRCU-UTN",
     },
     languagesSection: {
       title: "Languages",
@@ -160,12 +213,17 @@ export const translations = {
     },
     hero: {
       title: "Bienvenido",
+      role: "Desarrollador Fullstack AI (Senior)",
       description:
-        "Un currículum interactivo que también es un sistema solar: recorrelo para descubrir la experiencia, las habilidades y los proyectos de Cristhian Richard.",
+        "Acá podés encontrar la experiencia, los proyectos y la información de Cristhian Richard recorriendo este currículum interactivo, hecho como un sistema solar.",
+      location: "Argentina · Remoto, abierto a reubicarse",
+      email: "richardcristhian94@gmail.com",
       footnote: "Hecho con ❤️ por Cristhian Richard",
     },
     about: {
       title: "Sobre mí",
+      summary:
+        "Desarrollador Fullstack con más de 6 años de experiencia construyendo aplicaciones web en producción con Angular y Lit.js, respaldadas por APIs en Python y Node.js sobre GCP, además de experiencia con React y Next.js en proyectos personales. Cómodo desarrollando proyectos end-to-end, desde la arquitectura hasta el despliegue.",
       lines: {
         graduated: "Egresado como ingeniero en sistemas de la U.T.N.",
         proactive: "Proactivo, confiable, con espíritu de equipo y buen resolutor de problemas.",
@@ -199,18 +257,66 @@ export const translations = {
     experience: {
       title: "Experiencia",
       items: {
-        freelance: { title: "Trabajando como freelance", term: "Desde 05/2025" },
+        freelance: {
+          title: "Ingeniero de software freelance",
+          term: "Desde 06/2025",
+          bullets: [
+            "Desarrollé Caseritas, una app de gestión cloud-native con Next.js para un cliente mayorista de alimentos: automatización de inventario, flujos de pedidos y perfiles por rol (admin, ventas, cocina).",
+            "Diseñé y desplegué flujos de automatización con IA (Make) para pequeñas empresas, incluyendo generación automática de contenido para redes sociales y respuesta inteligente de emails.",
+            "Desarrollé landing pages de alta conversión para pequeñas empresas usando tecnologías frontend modernas.",
+          ],
+        },
         mediaMonks: {
-          title: "Senior Fullstack AI Engineer en Media.Monks",
-          term: "Período: 01/2021 - 05/2025",
+          company: "Media.Monks",
+          term: "Período: 01/2021 - 05/2025 · 4 años 4 meses · Remoto",
+          roles: [
+            {
+              title: "Fullstack AI Developer",
+              term: "Abr 2025 - May 2025 · 2 meses (título formalizado; trabajo con IA desde mediados de 2024)",
+              bullets: [
+                "Diseñé pipelines de generación de metadata con IA para más de 20.000 sitios web usando Vertex AI en GCP, mejorando la posibilidad de descubrimiento de contenido y la precisión SEO.",
+                "Iteré una solución de generación de copy de marketing con IA: empecé generando copy directamente con un modelo Gemini afinado, evolucioné a un flujo versionado a través de Gemini Gems, y finalmente construí un sistema RAG en GCP para fundamentar la generación de copy en documentos de referencia.",
+              ],
+            },
+            {
+              title: "Senior Frontend Developer",
+              term: "May 2023 - Abr 2025 · 2 años",
+              bullets: [
+                "Promovido a Senior tras liderar el desarrollo completo de aplicaciones Angular complejas, incluyendo un constructor dinámico de sitios de marketing usado por un equipo Fortune 500.",
+                "Construí una app interna Scorecard con Lit.js para mostrar tablas dinámicas e interactivas con puntajes de sitios.",
+                "Entregué experiencias de eventos en vivo y juegos con Lit.js y Python como parte de campañas de marketing.",
+                "Contribuí a una plataforma multi-tenant de gestión de campañas con IA usando Vue.js y Nest.js.",
+                "Creé y desplegué servicios de GCP Cloud Functions y App Engine, gestionando versionado y permisos IAM.",
+                "Asumí responsabilidad backend en servicios Python, expandiendo el alcance original frontend del puesto.",
+              ],
+            },
+            {
+              title: "Frontend Developer",
+              term: "Ene 2021 - May 2023 · 2 años 5 meses",
+              bullets: [
+                "Desarrollé y evolucioné un constructor de sitios CMS complejo con Angular y Python, usado internamente por un equipo Fortune 500.",
+                "Implementé renderizado del lado del servidor para el constructor de sitios usando Angular Universal con un enfoque minimalista: eliminé CSS/JS no utilizado del bundle y agregué scripts livianos acotados a las necesidades exactas de cada componente, reduciendo significativamente el tamaño del bundle y el tiempo de carga.",
+              ],
+            },
+          ],
         },
         sidesys: {
-          title: "Desarrollador Fullstack en SIDESYS IT Solutions",
+          title: "Desarrollador Frontend en SIDESYS IT Solutions",
           term: "Período: 06/2019 - 01/2021",
+          bullets: [
+            "Desarrollé funcionalidades en una aplicación de caja basada en Angular, conectada a un sistema de gestión de colas .NET Framework a gran escala.",
+            "Modernicé aplicaciones legacy Web Forms integrando Web Components reutilizables con Vue.js, mejorando la modularidad y el mantenimiento.",
+            "Desarrollé una aplicación de encuestas multi-paso y un frontend de gestión de turnos con Angular, integrando con un backend .NET Framework vía OpenAPI.",
+          ],
+        },
+        research: {
+          title: "Becario de investigación, Grupo de investigación universitario (FRCU-UTN)",
+          term: "Desde 03/2018",
+          bullets: [
+            "Me desempeñé como becario dentro de un grupo de investigación en bases de datos de la FRCU-UTN.",
+          ],
         },
       },
-      research:
-        "Grupo de investigación universitario desde 03/2018. Me desempeñé como becario dentro de un grupo de investigación en bases de datos de la FRCU-UTN",
     },
     languagesSection: {
       title: "Idiomas",
