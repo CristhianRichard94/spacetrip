@@ -117,8 +117,14 @@ html {
     background: #0a2342cc;
     color: #fafafa;
     font-size: 16px;
+    font-family: system-ui, sans-serif;
     cursor: pointer;
     backdrop-filter: blur(4px);
+  }
+
+  .navbar-toggle span {
+    display: block;
+    transform: translateY(-1px);
   }
 
   .navbar-toggle:hover {
@@ -178,9 +184,16 @@ html {
   gap: 8px;
 }
 
+.navbar-resume-link.download-resume {
+  height: auto;
+  line-height: normal;
+}
+
 .navbar-resume-link {
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: fit-content;
   gap: 4px;
   height: 32px;
   padding: 0 10px;
@@ -194,7 +207,9 @@ html {
   text-decoration: none;
   cursor: pointer;
   backdrop-filter: blur(4px);
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .navbar-resume-link:hover {
@@ -259,7 +274,10 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 
 .visual-mode-toggle:hover:not(:disabled) {
@@ -315,7 +333,10 @@ html {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 
 .lang-toggle:hover {
@@ -448,7 +469,12 @@ html {
   height: 260px;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  background: radial-gradient(circle, #4f8cff40 0%, #4f8cff14 45%, transparent 70%);
+  background: radial-gradient(
+    circle,
+    #4f8cff40 0%,
+    #4f8cff14 45%,
+    transparent 70%
+  );
   pointer-events: none;
 }
 
@@ -496,7 +522,10 @@ html {
   box-sizing: border-box;
   scroll-margin-top: 70px;
   scroll-snap-align: start;
-  transition: background 0.6s ease, border-color 0.6s ease, box-shadow 0.6s ease;
+  transition:
+    background 0.6s ease,
+    border-color 0.6s ease,
+    box-shadow 0.6s ease;
 }
 
 .text {
@@ -506,13 +535,18 @@ html {
   padding: 28px 32px;
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  transition: background 0.6s ease, border-color 0.6s ease, box-shadow 0.6s ease;
+  transition:
+    background 0.6s ease,
+    border-color 0.6s ease,
+    box-shadow 0.6s ease;
 }
 
 .main-section.in-view .text {
   background: #0a234280;
   border-color: #4f8cff66;
-  box-shadow: 0 0 32px 4px #4f8cff33, 0 0 0 1px #4f8cff22 inset;
+  box-shadow:
+    0 0 32px 4px #4f8cff33,
+    0 0 0 1px #4f8cff22 inset;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
 }
@@ -548,7 +582,6 @@ html {
     transform: none;
     opacity: 0;
   }
-
 }
 
 details summary {
@@ -712,7 +745,9 @@ li {
   max-width: 48px;
   max-height: 48px;
   filter: brightness(0) invert(1);
-  transition: filter 0.3s ease, transform 0.3s ease;
+  transition:
+    filter 0.3s ease,
+    transform 0.3s ease;
 }
 
 .social-media img:hover {
@@ -721,12 +756,14 @@ li {
 
 .social-media img[src*="instagram"]:hover {
   /* instagram pink */
-  filter: brightness(0) saturate(100%) invert(28%) sepia(54%) saturate(4500%) hue-rotate(325deg);
+  filter: brightness(0) saturate(100%) invert(28%) sepia(54%) saturate(4500%)
+    hue-rotate(325deg);
 }
 
 .social-media img[src*="linkedin"]:hover {
   /* linkedin blue */
-  filter: brightness(0) saturate(100%) invert(28%) sepia(94%) saturate(1800%) hue-rotate(180deg);
+  filter: brightness(0) saturate(100%) invert(28%) sepia(94%) saturate(1800%)
+    hue-rotate(180deg);
 }
 
 .social-media img[src*="github"]:hover {
@@ -770,7 +807,9 @@ a:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.3s ease, transform 0.3s ease;
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease;
 }
 
 .chatbot-toggle:hover {

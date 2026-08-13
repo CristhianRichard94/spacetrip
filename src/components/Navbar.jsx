@@ -43,7 +43,7 @@ function Navbar({ audioRef }) {
         aria-label={t("navbar.toggleMenu")}
         onClick={() => setIsOpen((open) => !open)}
       >
-        {isOpen ? "✕" : "☰"}
+        <span>{isOpen ? "✕" : "☰"}</span>
       </button>
       <ul id="navbar-links" className={`navbar-links${isOpen ? " open" : ""}`}>
         {NAV_LINKS.map((link) => (
@@ -55,7 +55,7 @@ function Navbar({ audioRef }) {
         ))}
         <li className="controls-stack">
           <a
-            className="navbar-resume-link"
+            className="navbar-resume-link download-resume"
             href={RESUME_URL}
             download
             target="_blank"
