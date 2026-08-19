@@ -9,12 +9,7 @@ import AsteroidBeltEnhanced from "./AsteroidBelt.enhanced.jsx";
 import CometEnhanced from "./Comet.enhanced.jsx";
 import ShootingStar from "./ShootingStar.jsx";
 import OrbitLine from "./OrbitLine.jsx";
-import { PLANETS, SUN_WAYPOINT } from "./planetsData.js";
-
-const WAYPOINT_DISTANCE = {
-  [SUN_WAYPOINT.section]: 0,
-  ...Object.fromEntries(PLANETS.map((planet) => [planet.section, planet.orbitRadius])),
-};
+import { PLANETS } from "./planetsData.js";
 
 const AMBIENT_INTENSITY = 0.16;
 const DIRECTIONAL_INTENSITY = 0.35;
@@ -70,7 +65,6 @@ function SolarSystemSceneEnhanced({ prefersReducedMotion, lowPower, onContextLos
   };
 
   const enablePostFx = !lowPower;
-  const focusDistance = Math.min((WAYPOINT_DISTANCE[activeSection] ?? 6) / 30, 1);
 
   if (!webGLAvailable) return null;
 
@@ -136,7 +130,7 @@ function SolarSystemSceneEnhanced({ prefersReducedMotion, lowPower, onContextLos
       {enablePostFx && (
         <EffectComposer multisampling={0}>
           <Bloom mipmapBlur intensity={0.6} luminanceThreshold={0.3} luminanceSmoothing={0.2} />
-          <DepthOfField focusDistance={focusDistance} focalLength={0.05} bokehScale={2.5} />
+          <DepthOfField focusDistance={0} focalLength={0.05} bokehScale={2.5} />
         </EffectComposer>
       )}
     </Canvas>

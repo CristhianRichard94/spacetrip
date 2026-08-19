@@ -12,7 +12,6 @@ const WAYPOINTS = [
 ];
 
 const CAMERA_OFFSET = new THREE.Vector3(2.5, 2, 6);
-const LERP_SPEED = 1.1;
 
 // Determine which section is actually in view right now by comparing each
 // section element's position against the viewport, so the camera can land
@@ -39,7 +38,7 @@ function computeCurrentWaypointIndex() {
   return bestIndex;
 }
 
-function ScrollCameraRig({ prefersReducedMotion, onActiveSectionChange, objectRefs }) {
+function ScrollCameraRig({ onActiveSectionChange }) {
   const activeIndexRef = useRef(0);
   const targetPositionRef = useRef(new THREE.Vector3());
   const targetLookAtRef = useRef(new THREE.Vector3());
@@ -99,37 +98,17 @@ function ScrollCameraRig({ prefersReducedMotion, onActiveSectionChange, objectRe
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useFrame((state, delta) => {
+  useFrame((state) => {
     const { camera } = state;
 
-    // Track the active section's actual object each frame (rather than a
-    // fixed reference point) so the camera keeps the planet centered even
-    // as it continues orbiting/spinning while a section is in view.
-    const activeSection = WAYPOINTS[activeIndexRef.current].section;
-    const trackedObject = objectRefs?.current?.[activeSection];
-    if (trackedObject) {
-      trackedObject.getWorldPosition(targetLookAtRef.current);
-      targetPositionRef.current
-        .copy(targetLookAtRef.current)
-        .add(CAMERA_OFFSET);
-    }
-
-    if (prefersReducedMotion || !hasSnappedRef.current) {
-      // First frame after mount (or reduced-motion mode): snap directly to
-      // the resolved waypoint instead of lerping in from the camera's
-      // default starting position, which is what produced the hero
-      // flash-then-correct on mode swap.
+    // Camera stays put once snapped to the initial waypoint — it no longer
+    // tracks section scroll or the active object's position.
+    if (!hasSnappedRef.current) {
       hasSnappedRef.current = true;
       camera.position.copy(targetPositionRef.current);
       currentLookAtRef.current.copy(targetLookAtRef.current);
       camera.lookAt(targetLookAtRef.current);
-      return;
     }
-
-    const lerpFactor = 1 - Math.exp(-LERP_SPEED * delta);
-    camera.position.lerp(targetPositionRef.current, lerpFactor);
-    currentLookAtRef.current.lerp(targetLookAtRef.current, lerpFactor);
-    camera.lookAt(currentLookAtRef.current);
   });
 
   return null;
