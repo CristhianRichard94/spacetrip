@@ -14,7 +14,11 @@ function useSectionHighlight() {
           entry.target.classList.toggle("in-view", entry.isIntersecting);
         });
       },
-      { threshold: 0.5, rootMargin: "-70px 0px 0px 0px" }
+      // threshold 0 (not 0.5): tall sections (e.g. experience) never reach
+      // 50% area visible, so area-based threshold never triggers for them.
+      // rootMargin shrinks viewport to a thin band near center so
+      // "in-view" still means "near top", just without an area minimum.
+      { threshold: 0, rootMargin: "-45% 0px -45% 0px" }
     );
 
     sections.forEach((section) => observer.observe(section));
