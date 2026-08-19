@@ -3,7 +3,6 @@ import useTranslation from "../../hooks/useTranslation.js";
 const LANGUAGES = [
   { nameKey: "english", levelKey: "fluent" },
   { nameKey: "spanish", levelKey: "native" },
-  { nameKey: "deutsch", levelKey: "basic" },
 ];
 
 function LanguagesSection() {

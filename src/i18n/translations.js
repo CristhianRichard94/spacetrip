@@ -123,7 +123,6 @@ export const translations = {
       names: {
         english: "English",
         spanish: "Spanish",
-        deutsch: "Deutsch",
       },
       levels: {
         fluent: "Fluent",
@@ -323,7 +322,6 @@ export const translations = {
       names: {
         english: "Inglés",
         spanish: "Español",
-        deutsch: "Alemán",
       },
       levels: {
         fluent: "Avanzado",
