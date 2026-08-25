@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { EffectComposer, Bloom, DepthOfField } from "@react-three/postprocessing";
+import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import SunEnhanced from "./Sun.enhanced.jsx";
 import PlanetEnhanced from "./Planet.enhanced.jsx";
 import ScrollCameraRig from "./ScrollCameraRig.jsx";
@@ -131,7 +131,6 @@ function SolarSystemSceneEnhanced({ prefersReducedMotion, lowPower, onContextLos
       {enablePostFx && (
         <EffectComposer multisampling={0}>
           <Bloom mipmapBlur intensity={0.6} luminanceThreshold={0.3} luminanceSmoothing={0.2} />
-          <DepthOfField focusDistance={0} focalLength={0.05} bokehScale={2.5} />
         </EffectComposer>
       )}
     </Canvas>
