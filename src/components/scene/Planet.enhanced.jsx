@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef } from "react";
+import { memo, Suspense, useEffect, useRef } from "react";
 import { useLoader } from "@react-three/fiber";
 import { TextureLoader } from "three";
 import * as THREE from "three";
@@ -12,9 +12,13 @@ const ATMOSPHERE_COLORS = {
   Venus: "#e8c88a",
 };
 
+const PLANET_FADE_MS = 450;
+
 function PlanetEnhanced({ planet, prefersReducedMotion, isActive, registerRef, lowPower }) {
   const orbitGroupRef = useRef(null);
   const meshRef = useRef(null);
+  const materialRef = useRef(null);
+  const fadeStartRef = useRef(null);
   const texture = useLoader(TextureLoader, planet.texture, (loadedTexture) => {
     loadedTexture.colorSpace = THREE.SRGBColorSpace;
   });
@@ -25,12 +29,23 @@ function PlanetEnhanced({ planet, prefersReducedMotion, isActive, registerRef, l
   }, [registerRef, planet.section]);
 
   useSafeFrame((_, delta) => {
-    if (prefersReducedMotion) return;
-    if (orbitGroupRef.current) {
-      orbitGroupRef.current.rotation.y += delta * planet.orbitSpeed;
+    if (!prefersReducedMotion) {
+      if (orbitGroupRef.current) {
+        orbitGroupRef.current.rotation.y += delta * planet.orbitSpeed;
+      }
+      if (meshRef.current) {
+        meshRef.current.rotation.y += delta * planet.spinSpeed;
+      }
     }
-    if (meshRef.current) {
-      meshRef.current.rotation.y += delta * planet.spinSpeed;
+
+    // This component only mounts once its own texture has resolved behind
+    // the Suspense boundary, so fade its mesh in independently of the other
+    // planets/lights to avoid an abrupt pop-in when it resolves late.
+    if (materialRef.current) {
+      if (fadeStartRef.current === null) fadeStartRef.current = performance.now();
+      const t = Math.min((performance.now() - fadeStartRef.current) / PLANET_FADE_MS, 1);
+      const eased = t * t * (3 - 2 * t);
+      materialRef.current.opacity = eased;
     }
   });
 
@@ -43,9 +58,12 @@ function PlanetEnhanced({ planet, prefersReducedMotion, isActive, registerRef, l
         <mesh ref={meshRef} castShadow receiveShadow>
           <sphereGeometry args={[planet.size, 48, 48]} />
           <meshStandardMaterial
+            ref={materialRef}
             map={texture}
             roughness={0.9}
             metalness={0.05}
+            transparent
+            opacity={0}
           />
         </mesh>
         {atmosphereColor && !lowPower && (
@@ -58,7 +76,14 @@ function PlanetEnhanced({ planet, prefersReducedMotion, isActive, registerRef, l
           />
         )}
         {isActive && (
-          <Moon planet={planet} prefersReducedMotion={prefersReducedMotion} />
+          // Moon mounts on demand once its planet becomes active, well after
+          // the outer scene Suspense boundary has already resolved. Without
+          // its own boundary here, Moon's texture load re-suspends that
+          // outer boundary and blanks every already-rendered planet/sun
+          // until Moon's texture arrives.
+          <Suspense fallback={null}>
+            <Moon planet={planet} prefersReducedMotion={prefersReducedMotion} />
+          </Suspense>
         )}
       </group>
     </group>

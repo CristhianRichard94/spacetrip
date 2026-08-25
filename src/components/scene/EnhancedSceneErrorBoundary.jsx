@@ -11,6 +11,8 @@ class EnhancedSceneErrorBoundary extends Component {
   }
 
   componentDidCatch(error) {
+    // eslint-disable-next-line no-console
+    console.error("Enhanced scene render error, falling back to classic view:", error);
     this.props.onError?.(error);
   }
 

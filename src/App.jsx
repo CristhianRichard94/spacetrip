@@ -23,12 +23,37 @@ function AppContent({ audioRef, mounted }) {
   const { resolved, loading } = useSceneModeContext();
   const [chunkReady, setChunkReady] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
+  // Tracks the classic-fallback -> SceneRoot swap explicitly instead of
+  // letting Suspense do it instantaneously (fallback -> children happens in
+  // one commit with no gap for the GPU to release the fallback's WebGL
+  // context before SceneRoot's own Canvas creates a new one — see #25).
+  const [showFallbackScene, setShowFallbackScene] = useState(true);
+  const [mountSceneRoot, setMountSceneRoot] = useState(false);
 
   useEffect(() => {
     import("./components/scene/SceneRoot.jsx")
       .then(() => setChunkReady(true))
       .catch(() => setChunkReady(true));
   }, []);
+
+  useEffect(() => {
+    if (!chunkReady) return undefined;
+
+    setShowFallbackScene(false);
+
+    let raf1 = 0;
+    let raf2 = 0;
+    raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        setMountSceneRoot(true);
+      });
+    });
+
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+    };
+  }, [chunkReady]);
 
   const sceneReady = resolved && chunkReady && !loading;
 
@@ -60,16 +85,20 @@ function AppContent({ audioRef, mounted }) {
           {/* SceneRoot's chunk bundles both classic + enhanced scenes and
               can take several seconds to download. Show the lighter classic
               scene (its own chunk) as an instant stand-in so the page never
-              goes blank, then swap in SceneRoot once it's ready. */}
-          <Suspense
-            fallback={
-              <Suspense fallback={null}>
-                <ClassicSceneFallback />
-              </Suspense>
-            }
-          >
-            <SceneRoot />
-          </Suspense>
+              goes blank, then swap in SceneRoot once it's ready. The swap
+              itself is gapped (unmount fallback, wait two rAFs, mount
+              SceneRoot) so the two Canvases never hold live WebGL contexts
+              at the same time — see #25. */}
+          {showFallbackScene && (
+            <Suspense fallback={null}>
+              <ClassicSceneFallback />
+            </Suspense>
+          )}
+          {mountSceneRoot && (
+            <Suspense fallback={null}>
+              <SceneRoot />
+            </Suspense>
+          )}
         </ChunkErrorBoundary>
       )}
 
