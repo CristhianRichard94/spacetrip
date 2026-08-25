@@ -1,9 +1,13 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import hasWebGL from "./hasWebGL.js";
 import SolarSystemScene from "./SolarSystemScene.jsx";
 import SolarSystemSceneEnhanced from "./SolarSystemScene.enhanced.jsx";
 import EnhancedSceneErrorBoundary from "./EnhancedSceneErrorBoundary.jsx";
 import { useSceneModeContext } from "../../context/SceneModeContext.jsx";
+
+// Dev-only tuning overlay for camera/bloom/dpr/fade props — never bundled
+// or mounted in production builds.
+const DebugPanel = import.meta.env.DEV ? lazy(() => import("../../dev/DebugPanel.jsx")) : null;
 
 function SceneRoot() {
   const {
@@ -102,20 +106,27 @@ function SceneRoot() {
   }
 
   return (
-    <EnhancedSceneErrorBoundary
-      resetKey={errorResetKey}
-      onError={() => {
-        fallbackToClassic();
-        setErrorResetKey((key) => key + 1);
-      }}
-    >
-      <SolarSystemSceneEnhanced
-        prefersReducedMotion={prefersReducedMotion}
-        lowPower={prefersReducedMotion || lowEndDevice}
-        onReady={() => setLoading(false)}
-        onContextLost={() => fallbackToClassic()}
-      />
-    </EnhancedSceneErrorBoundary>
+    <>
+      <EnhancedSceneErrorBoundary
+        resetKey={errorResetKey}
+        onError={() => {
+          fallbackToClassic();
+          setErrorResetKey((key) => key + 1);
+        }}
+      >
+        <SolarSystemSceneEnhanced
+          prefersReducedMotion={prefersReducedMotion}
+          lowPower={prefersReducedMotion || lowEndDevice}
+          onReady={() => setLoading(false)}
+          onContextLost={() => fallbackToClassic()}
+        />
+      </EnhancedSceneErrorBoundary>
+      {DebugPanel && (
+        <Suspense fallback={null}>
+          <DebugPanel />
+        </Suspense>
+      )}
+    </>
   );
 }
 

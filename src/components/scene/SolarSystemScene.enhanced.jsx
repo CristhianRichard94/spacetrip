@@ -10,17 +10,17 @@ import CometEnhanced from "./Comet.enhanced.jsx";
 import ShootingStar from "./ShootingStar.jsx";
 import OrbitLine from "./OrbitLine.jsx";
 import { PLANETS } from "./planetsData.js";
+import { useDebugValues } from "../../dev/debugStore.js";
 
 const AMBIENT_INTENSITY = 0.16;
 const DIRECTIONAL_INTENSITY = 0.35;
-const LIGHT_FADE_MS = 1200;
 const CONTENT_READY_TIMEOUT_MS = 4000;
 
 // Meshes/textures pop in as they resolve behind the Suspense boundary below,
 // which looks like a glitch once the camera has moved away from the sun.
 // Fading lights up from 0 (instead of snapping to full intensity) once
 // content is actually mounted hides that pop-in instead of masking it.
-function FadeInLights({ active }) {
+function FadeInLights({ active, fadeMs }) {
   const ambientRef = useRef(null);
   const directionalRef = useRef(null);
   const startRef = useRef(null);
@@ -28,7 +28,7 @@ function FadeInLights({ active }) {
   useFrame(() => {
     if (!active || !ambientRef.current || !directionalRef.current) return;
     if (startRef.current === null) startRef.current = performance.now();
-    const t = Math.min((performance.now() - startRef.current) / LIGHT_FADE_MS, 1);
+    const t = Math.min((performance.now() - startRef.current) / fadeMs, 1);
     const eased = t * t * (3 - 2 * t);
     ambientRef.current.intensity = AMBIENT_INTENSITY * eased;
     directionalRef.current.intensity = DIRECTIONAL_INTENSITY * eased;
@@ -58,6 +58,8 @@ function SolarSystemSceneEnhanced({ prefersReducedMotion, lowPower, onContextLos
   const [activeSection, setActiveSection] = useState("hero-section");
   const objectRefs = useRef({});
   const contentReadyFiredRef = useRef(false);
+  const { bloomIntensity, bloomThreshold, bloomSmoothing, dprMax, lightFadeMs } =
+    useDebugValues();
 
   const markContentReady = () => {
     if (contentReadyFiredRef.current) return;
@@ -90,7 +92,7 @@ function SolarSystemSceneEnhanced({ prefersReducedMotion, lowPower, onContextLos
 
   return (
     <Canvas
-      dpr={[1, 2]}
+      dpr={[1, dprMax]}
       className="webgl"
       style={{
         position: "fixed",
@@ -116,7 +118,7 @@ function SolarSystemSceneEnhanced({ prefersReducedMotion, lowPower, onContextLos
       }}
     >
       <color attach="background" args={["#050b1f"]} />
-      <FadeInLights active={contentReady} />
+      <FadeInLights active={contentReady} fadeMs={lightFadeMs} />
       <StarsEnhanced lowPower={lowPower} />
       <ShootingStar prefersReducedMotion={prefersReducedMotion} />
       {PLANETS.map((planet) => (
@@ -145,7 +147,12 @@ function SolarSystemSceneEnhanced({ prefersReducedMotion, lowPower, onContextLos
       />
       {enablePostFx && (
         <EffectComposer multisampling={0}>
-          <Bloom mipmapBlur intensity={0.6} luminanceThreshold={0.3} luminanceSmoothing={0.2} />
+          <Bloom
+            mipmapBlur
+            intensity={bloomIntensity}
+            luminanceThreshold={bloomThreshold}
+            luminanceSmoothing={bloomSmoothing}
+          />
         </EffectComposer>
       )}
     </Canvas>
