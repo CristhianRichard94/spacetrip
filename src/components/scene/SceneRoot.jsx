@@ -14,8 +14,34 @@ function SceneRoot() {
     fallbackToClassic,
     isEnhancedUnsupportedThisSession,
   } = useSceneModeContext();
-  const [webGLAvailable] = useState(() => hasWebGL());
+  const [webGLAvailable, setWebGLAvailable] = useState(() => hasWebGL());
   const [errorResetKey, setErrorResetKey] = useState(0);
+
+  useEffect(() => {
+    if (webGLAvailable) return undefined;
+
+    // hasWebGL() is a one-shot synchronous getContext() call. A transient
+    // condition at that exact instant — the browser's WebGL context limit
+    // momentarily exhausted by other tabs, the GPU process mid-restart —
+    // can make it return false even on fully capable hardware, and nothing
+    // about that failure throws or logs anything. Retry a couple of times
+    // after short delays before committing to the no-WebGL fallback, since
+    // those conditions typically clear within a second.
+    let cancelled = false;
+    const attempts = [400, 1200];
+    const timers = attempts.map((delay) =>
+      setTimeout(() => {
+        if (cancelled) return;
+        if (hasWebGL()) setWebGLAvailable(true);
+      }, delay)
+    );
+
+    return () => {
+      cancelled = true;
+      timers.forEach(clearTimeout);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [webGLAvailable]);
 
   const wantsEnhanced = mode === "enhanced" && !isEnhancedUnsupportedThisSession();
 
