@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef } from "react";
+import { memo, Suspense, useEffect, useRef } from "react";
 import { useLoader } from "@react-three/fiber";
 import { TextureLoader } from "three";
 import * as THREE from "three";
@@ -76,7 +76,14 @@ function PlanetEnhanced({ planet, prefersReducedMotion, isActive, registerRef, l
           />
         )}
         {isActive && (
-          <Moon planet={planet} prefersReducedMotion={prefersReducedMotion} />
+          // Moon mounts on demand once its planet becomes active, well after
+          // the outer scene Suspense boundary has already resolved. Without
+          // its own boundary here, Moon's texture load re-suspends that
+          // outer boundary and blanks every already-rendered planet/sun
+          // until Moon's texture arrives.
+          <Suspense fallback={null}>
+            <Moon planet={planet} prefersReducedMotion={prefersReducedMotion} />
+          </Suspense>
         )}
       </group>
     </group>
