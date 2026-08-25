@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import { PLANETS, SUN_WAYPOINT, getWaypointPosition } from "./planetsData.js";
+import { useDebugValues } from "../../dev/debugStore.js";
 
 const WAYPOINTS = [
   { section: SUN_WAYPOINT.section, position: SUN_WAYPOINT.position },
@@ -10,8 +11,6 @@ const WAYPOINTS = [
     position: getWaypointPosition(planet),
   })),
 ];
-
-const CAMERA_OFFSET = new THREE.Vector3(2.5, 2, 6);
 
 // Determine which section is actually in view right now by comparing each
 // section element's position against the viewport, so the camera can land
@@ -44,6 +43,9 @@ function ScrollCameraRig({ onActiveSectionChange }) {
   const targetLookAtRef = useRef(new THREE.Vector3());
   const currentLookAtRef = useRef(new THREE.Vector3());
   const hasSnappedRef = useRef(false);
+  const debugValues = useDebugValues();
+  const debugValuesRef = useRef(debugValues);
+  debugValuesRef.current = debugValues;
 
   const applyWaypoint = (index) => {
     activeIndexRef.current = index;
@@ -51,10 +53,31 @@ function ScrollCameraRig({ onActiveSectionChange }) {
     // Fallback reference position, used only until the tracked object
     // registers itself (e.g. still loading its texture behind Suspense).
     const [x, y, z] = waypoint.position;
+    const { cameraOffsetX, cameraOffsetY, cameraOffsetZ, sunOffsetScale } =
+      debugValuesRef.current;
+    const offsetScale = index === 0 ? sunOffsetScale : 1;
     targetLookAtRef.current.set(x, y, z);
-    targetPositionRef.current.set(x + CAMERA_OFFSET.x, y + CAMERA_OFFSET.y, z + CAMERA_OFFSET.z);
+    targetPositionRef.current.set(
+      x + cameraOffsetX * offsetScale,
+      y + cameraOffsetY * offsetScale,
+      z + cameraOffsetZ * offsetScale
+    );
     onActiveSectionChange?.(waypoint.section);
   };
+
+  // Re-apply the current waypoint when a debug slider changes so camera
+  // offset / sun-scale knobs update live instead of only on next section change.
+  useEffect(() => {
+    if (!hasSnappedRef.current) return;
+    applyWaypoint(activeIndexRef.current);
+    hasSnappedRef.current = false;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    debugValues.cameraOffsetX,
+    debugValues.cameraOffsetY,
+    debugValues.cameraOffsetZ,
+    debugValues.sunOffsetScale,
+  ]);
 
   useEffect(() => {
     applyWaypoint(computeCurrentWaypointIndex());
