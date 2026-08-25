@@ -40,6 +40,10 @@ function AppContent({ audioRef, mounted }) {
 
   return (
     <>
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+
       {showLoader && <AppLoader exiting={sceneReady} />}
 
       {/* deferred past first paint: 32MB file, must not compete with LCP */}
@@ -69,14 +73,16 @@ function AppContent({ audioRef, mounted }) {
         </ChunkErrorBoundary>
       )}
 
-      <HeroSection />
-      <PortfolioSection />
-      <AboutSection />
-      <ExperienceSection />
-      <EducationSection />
-      <LanguagesSection />
-      <SkillsSection />
-      <SocialsSection />
+      <main id="main-content">
+        <HeroSection />
+        <PortfolioSection />
+        <AboutSection />
+        <ExperienceSection />
+        <EducationSection />
+        <LanguagesSection />
+        <SkillsSection />
+        <SocialsSection />
+      </main>
       <ChunkErrorBoundary>
         <Suspense fallback={null}>
           <Chatbot />
