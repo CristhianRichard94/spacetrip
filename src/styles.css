@@ -275,9 +275,9 @@ html {
   align-items: center;
   justify-content: center;
   transition:
-    background 0.3s ease,
-    transform 0.3s ease,
-    opacity 0.3s ease;
+    background 0.15s ease,
+    transform 0.15s ease,
+    opacity 0.15s ease;
 }
 
 .visual-mode-toggle:hover:not(:disabled) {
@@ -334,9 +334,9 @@ html {
   align-items: center;
   justify-content: center;
   transition:
-    background 0.3s ease,
-    transform 0.3s ease,
-    opacity 0.3s ease;
+    background 0.15s ease,
+    transform 0.15s ease,
+    opacity 0.15s ease;
 }
 
 .lang-toggle:hover {
@@ -874,8 +874,8 @@ a:hover {
   align-items: center;
   justify-content: center;
   transition:
-    background 0.3s ease,
-    transform 0.3s ease;
+    background 0.12s ease,
+    transform 0.12s ease;
 }
 
 .chatbot-toggle:hover {
