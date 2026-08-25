@@ -4,9 +4,9 @@ import { useSyncExternalStore } from "react";
 // sun-framing bugs (camera offset, sun distance, bloom, dpr, fade timing).
 // Never imported/rendered outside import.meta.env.DEV — see DebugPanel.jsx.
 const defaults = {
-  cameraOffsetX: 2.5,
-  cameraOffsetY: 2,
-  cameraOffsetZ: 6,
+  cameraOffsetX: 6,
+  cameraOffsetY: 3.5,
+  cameraOffsetZ: 9.3,
   sunOffsetScale: 1.6,
   bloomIntensity: 0.6,
   bloomThreshold: 0.3,

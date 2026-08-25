@@ -105,7 +105,7 @@ function SolarSystemSceneEnhanced({ prefersReducedMotion, lowPower, onContextLos
       }}
       aria-hidden="true"
       shadows
-      camera={{ position: [2.5, 2, 6], fov: 45, near: 0.1, far: 200 }}
+      camera={{ position: [6, 3.5, 9.3], fov: 45, near: 0.1, far: 200 }}
       onCreated={({ gl }) => {
         gl.domElement.addEventListener(
           "webglcontextlost",
