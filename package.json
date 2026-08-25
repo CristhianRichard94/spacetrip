@@ -15,8 +15,6 @@
     "vite": "^4.3.9"
   },
   "dependencies": {
-    "@ds/tokens": "file:../design-system/packages/tokens",
-    "@ds/ui": "file:../design-system/packages/ui",
     "@netlify/blobs": "^10.7.9",
     "@react-three/drei": "^9.99.0",
     "@react-three/fiber": "^8.15.16",
