@@ -13,6 +13,14 @@ const WAYPOINTS = [
 
 const CAMERA_OFFSET = new THREE.Vector3(2.5, 2, 6);
 
+// The sun (waypoint index 0) is large relative to the other waypoints' 45deg
+// FOV framing — at the standard CAMERA_OFFSET distance it fills roughly
+// half the vertical frame, with its bloom glow extending well past that,
+// reading as an overexposed/washed-out hero rather than a dramatic close-up.
+// Pull the camera back specifically for the sun waypoint; every other
+// waypoint keeps the standard offset.
+const SUN_CAMERA_OFFSET_SCALE = 1.6;
+
 // Determine which section is actually in view right now by comparing each
 // section element's position against the viewport, so the camera can land
 // on the correct waypoint immediately on mount instead of always starting
@@ -51,8 +59,13 @@ function ScrollCameraRig({ onActiveSectionChange }) {
     // Fallback reference position, used only until the tracked object
     // registers itself (e.g. still loading its texture behind Suspense).
     const [x, y, z] = waypoint.position;
+    const offsetScale = index === 0 ? SUN_CAMERA_OFFSET_SCALE : 1;
     targetLookAtRef.current.set(x, y, z);
-    targetPositionRef.current.set(x + CAMERA_OFFSET.x, y + CAMERA_OFFSET.y, z + CAMERA_OFFSET.z);
+    targetPositionRef.current.set(
+      x + CAMERA_OFFSET.x * offsetScale,
+      y + CAMERA_OFFSET.y * offsetScale,
+      z + CAMERA_OFFSET.z * offsetScale
+    );
     onActiveSectionChange?.(waypoint.section);
   };
 
