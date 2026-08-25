@@ -122,7 +122,15 @@ function SunEnhanced({ prefersReducedMotion, registerRef }) {
           blending={THREE.AdditiveBlending}
         />
       </mesh>
-      <pointLight color="#ffb347" intensity={1.4} distance={40} decay={2} />
+      <pointLight
+        color="#ffb347"
+        intensity={1.4}
+        distance={40}
+        decay={2}
+        castShadow
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
+      />
     </group>
   );
 }

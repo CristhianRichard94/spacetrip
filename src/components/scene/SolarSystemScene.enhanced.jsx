@@ -70,6 +70,7 @@ function SolarSystemSceneEnhanced({ prefersReducedMotion, lowPower, onContextLos
 
   return (
     <Canvas
+      dpr={[1, 2]}
       className="webgl"
       style={{
         position: "fixed",

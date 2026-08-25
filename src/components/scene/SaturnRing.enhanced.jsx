@@ -22,7 +22,6 @@ function SaturnRingEnhanced({ innerRadius, outerRadius }) {
   return (
     <mesh geometry={geometry} rotation={[Math.PI / 2.4, 0, 0]} castShadow receiveShadow>
       <meshStandardMaterial
-        map={alphaMap}
         alphaMap={alphaMap}
         transparent
         side={THREE.DoubleSide}

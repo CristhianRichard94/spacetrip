@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import useSectionHighlight from "./hooks/useSectionHighlight";
+import useStaggerReveal from "./hooks/useStaggerReveal";
 import Navbar from "./components/Navbar.jsx";
 import AppLoader from "./components/AppLoader.jsx";
 import ChunkErrorBoundary from "./components/ChunkErrorBoundary.jsx";
@@ -89,6 +90,7 @@ function App() {
   const audioRef = useRef(null);
   const [mounted, setMounted] = useState(false);
   useSectionHighlight();
+  useStaggerReveal();
 
   useEffect(() => {
     setMounted(true);
