@@ -143,6 +143,12 @@ html {
     font-family: system-ui, sans-serif;
     cursor: pointer;
     backdrop-filter: blur(4px);
+    /* Both this button and .navbar-links.open are `position: fixed` near
+       the top-left corner. Without an explicit stacking order, the drawer
+       (later in DOM order) paints above the toggle and swallows its clicks,
+       making it impossible to close the menu via the same button. */
+    position: relative;
+    z-index: 2;
   }
 
   .navbar-toggle span {
@@ -158,6 +164,7 @@ html {
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 1;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
