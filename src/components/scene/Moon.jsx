@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { TextureLoader } from "three";
+import * as THREE from "three";
 
 const MOON_ORBIT_RADIUS_FACTOR = 1.8;
 const MOON_ORBIT_SPEED = 0.7;
@@ -9,7 +10,9 @@ const MOON_SPIN_SPEED = 0.3;
 function Moon({ planet, prefersReducedMotion }) {
   const orbitGroupRef = useRef(null);
   const meshRef = useRef(null);
-  const texture = useLoader(TextureLoader, "/textures/2k_moon.jpg");
+  const texture = useLoader(TextureLoader, "/textures/2k_moon.jpg", (loadedTexture) => {
+    loadedTexture.colorSpace = THREE.SRGBColorSpace;
+  });
   const moonOrbitRadius = planet.size * MOON_ORBIT_RADIUS_FACTOR + 0.25;
   const moonSize = Math.max(planet.size * 0.28, 0.06);
 

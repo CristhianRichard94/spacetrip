@@ -1,6 +1,7 @@
 import { memo, useEffect, useRef } from "react";
 import { useLoader } from "@react-three/fiber";
 import { TextureLoader } from "three";
+import * as THREE from "three";
 import Moon from "./Moon.jsx";
 import AtmosphereEnhanced from "./Atmosphere.enhanced.jsx";
 import SaturnRingEnhanced from "./SaturnRing.enhanced.jsx";
@@ -14,7 +15,9 @@ const ATMOSPHERE_COLORS = {
 function PlanetEnhanced({ planet, prefersReducedMotion, isActive, registerRef, lowPower }) {
   const orbitGroupRef = useRef(null);
   const meshRef = useRef(null);
-  const texture = useLoader(TextureLoader, planet.texture);
+  const texture = useLoader(TextureLoader, planet.texture, (loadedTexture) => {
+    loadedTexture.colorSpace = THREE.SRGBColorSpace;
+  });
 
   useEffect(() => {
     registerRef?.(planet.section, meshRef.current);
