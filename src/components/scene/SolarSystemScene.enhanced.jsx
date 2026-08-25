@@ -14,6 +14,7 @@ import { PLANETS } from "./planetsData.js";
 const AMBIENT_INTENSITY = 0.16;
 const DIRECTIONAL_INTENSITY = 0.35;
 const LIGHT_FADE_MS = 1200;
+const CONTENT_READY_TIMEOUT_MS = 4000;
 
 // Meshes/textures pop in as they resolve behind the Suspense boundary below,
 // which looks like a glitch once the camera has moved away from the sun.
@@ -56,6 +57,25 @@ function SolarSystemSceneEnhanced({ prefersReducedMotion, lowPower, onContextLos
   const [contentReady, setContentReady] = useState(false);
   const [activeSection, setActiveSection] = useState("hero-section");
   const objectRefs = useRef({});
+  const contentReadyFiredRef = useRef(false);
+
+  const markContentReady = () => {
+    if (contentReadyFiredRef.current) return;
+    contentReadyFiredRef.current = true;
+    setContentReady(true);
+    onReady?.();
+  };
+
+  // Safety net: if Suspense content (textures) hasn't resolved within
+  // CONTENT_READY_TIMEOUT_MS, force the scene to light up anyway instead of
+  // staying dark forever if a texture request stalls or fails silently.
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      markContentReady();
+    }, CONTENT_READY_TIMEOUT_MS);
+    return () => clearTimeout(timeoutId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const registerRef = (section, object) => {
     if (object) {
       objectRefs.current[section] = object;
@@ -116,12 +136,7 @@ function SolarSystemSceneEnhanced({ prefersReducedMotion, lowPower, onContextLos
         ))}
         <AsteroidBeltEnhanced prefersReducedMotion={prefersReducedMotion} lowPower={lowPower} />
         {!lowPower && <CometEnhanced prefersReducedMotion={prefersReducedMotion} />}
-        <ContentReadyMarker
-          onReady={() => {
-            setContentReady(true);
-            onReady?.();
-          }}
-        />
+        <ContentReadyMarker onReady={markContentReady} />
       </Suspense>
       <ScrollCameraRig
         prefersReducedMotion={prefersReducedMotion}
