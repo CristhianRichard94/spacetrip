@@ -24,7 +24,7 @@ function SocialsSection() {
   return (
     <section className="main-section align-left" id="socials-section">
       <div className="text">
-        <h1>{t("socials.title")}</h1>
+        <h2>{t("socials.title")}</h2>
         <ul className="social-media">
           {SOCIALS.map((social) => (
             <li key={social.href}>

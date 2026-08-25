@@ -5,7 +5,7 @@ function SkillsSection() {
 
   return (
     <section className="main-section align-right" id="skills-section">
-      <h1>{t("skills.title")}</h1>
+      <h2>{t("skills.title")}</h2>
       <div className="text">
         <ul>
           <li>

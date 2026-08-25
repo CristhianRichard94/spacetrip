@@ -7,7 +7,7 @@ function ExperienceSection() {
 
   return (
     <section className="main-section align-left" id="experience-section">
-      <h1>{t("experience.title")}</h1>
+      <h2>{t("experience.title")}</h2>
       <div className="text">
         <ul>
           {EXPERIENCE_KEYS.map((key) => {

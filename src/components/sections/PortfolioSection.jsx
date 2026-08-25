@@ -20,7 +20,7 @@ function PortfolioSection() {
 
   return (
     <section className="main-section align-left" id="portfolio-section">
-      <h1>{t("portfolio.title")}</h1>
+      <h2>{t("portfolio.title")}</h2>
       <div className="text">
         <details open>
           <summary>{t("portfolio.projects")}</summary>

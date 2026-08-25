@@ -7,7 +7,7 @@ function EducationSection() {
 
   return (
     <section className="main-section align-right" id="education-section">
-      <h1>{t("education.title")}</h1>
+      <h2>{t("education.title")}</h2>
       <div className="text">
         <ul>
           <li>
