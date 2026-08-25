@@ -846,6 +846,11 @@ a:hover {
   text-decoration: underline;
 }
 
+a:focus-visible {
+  outline: 2px solid #4f8cff;
+  outline-offset: 2px;
+}
+
 /* Chatbot widget: floating bottom-right FAB + expandable panel, using the
    same dark-space palette (#0a2342 / #4f8cff) as the navbar controls. */
 .chatbot-widget {
