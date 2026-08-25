@@ -5,7 +5,9 @@ import * as THREE from "three";
 import { Stars as DreiStars } from "@react-three/drei";
 
 function StarsEnhanced({ lowPower }) {
-  const milkyWayTexture = useLoader(TextureLoader, "/textures/2k_stars_milky_way.jpg");
+  const milkyWayTexture = useLoader(TextureLoader, "/textures/2k_stars_milky_way.jpg", (loadedTexture) => {
+    loadedTexture.colorSpace = THREE.SRGBColorSpace;
+  });
 
   return (
     <>

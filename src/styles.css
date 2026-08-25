@@ -654,6 +654,23 @@ html {
     transform: none;
   }
 
+  .lang-toggle {
+    transition: none;
+  }
+
+  .lang-toggle:hover,
+  .lang-toggle:active {
+    transform: none;
+  }
+
+  .chatbot-toggle {
+    transition: none;
+  }
+
+  .chatbot-toggle:hover {
+    transform: none;
+  }
+
   .visual-mode-tooltip {
     transition: none;
   }
