@@ -41,8 +41,6 @@ function PlanetEnhanced({ planet, prefersReducedMotion, isActive, registerRef, l
           <sphereGeometry args={[planet.size, 48, 48]} />
           <meshStandardMaterial
             map={texture}
-            bumpMap={texture}
-            bumpScale={0.02}
             roughness={0.9}
             metalness={0.05}
           />

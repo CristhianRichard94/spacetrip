@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* @ds design tokens, scoped so they don't collide with this site's own
-   CSS variables — only elements under [data-ds-scope] pick them up. */
-[data-ds-scope] {
+/* @ds design tokens, defined globally on :root so they're available
+   throughout the site's own stylesheet. */
+:root {
   --accent-50: #eff4ff;
   --accent-100: #dbe6fe;
   --accent-200: #bfd4fe;
@@ -49,7 +49,7 @@ body,
 html {
   width: 100%;
   background: linear-gradient(180deg, #050e1e 0%, #0a2342 55%, #061229 100%);
-  color: #fafafa;
+  color: var(--fg);
   margin: 0;
   font-family: "SinMedia Sans", sans-serif;
 }
@@ -81,7 +81,7 @@ html {
 }
 
 .navbar-links a {
-  color: #fafafa;
+  color: var(--fg);
   text-decoration: none;
   font-size: 13px;
   white-space: nowrap;
@@ -115,7 +115,7 @@ html {
     border-radius: 50%;
     border: 1px solid #4f8cff;
     background: #0a2342cc;
-    color: #fafafa;
+    color: var(--fg);
     font-size: 16px;
     font-family: system-ui, sans-serif;
     cursor: pointer;
@@ -200,7 +200,7 @@ html {
   border-radius: 16px;
   border: 1px solid #4f8cff;
   background: #0a2342cc;
-  color: #fafafa;
+  color: var(--fg);
   font-size: 13px;
   line-height: 1;
   white-space: nowrap;
@@ -231,7 +231,7 @@ html {
   border-radius: 50%;
   border: 1px solid #4f8cff;
   background: #0a2342cc;
-  color: #fafafa;
+  color: var(--fg);
   font-size: 16px;
   cursor: pointer;
   backdrop-filter: blur(4px);
@@ -268,7 +268,7 @@ html {
   border: 1px solid #4f8cff;
   background: #0a2342cc;
   backdrop-filter: blur(4px);
-  color: #fafafa;
+  color: var(--fg);
   font-size: 16px;
   cursor: pointer;
   display: flex;
@@ -326,7 +326,7 @@ html {
   border: 1px solid #4f8cff;
   background: #0a2342cc;
   backdrop-filter: blur(4px);
-  color: #fafafa;
+  color: var(--fg);
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
@@ -432,7 +432,8 @@ html {
   width: 100%;
   height: 3px;
   background: #4f8cff;
-  transition: left 0.6s ease 0.1s;
+  transform: translateX(0%);
+  transition: transform 0.6s ease 0.1s;
 }
 
 .loader-shutter.bottom {
@@ -448,7 +449,7 @@ html {
 }
 
 .app-loader.exiting .loader-shutter.top::before {
-  left: 100%;
+  transform: translateX(100%);
 }
 
 .loader-core {
@@ -551,10 +552,75 @@ html {
   -webkit-backdrop-filter: blur(20px);
 }
 
+/* Staggered list-item entrance for the sections with list content
+   (skills, portfolio, languages), cascading in one item after another
+   instead of appearing all at once when the section scrolls into view. */
+#skills-section .text li,
+#portfolio-section .text li,
+#languages-section .text li {
+  opacity: 0;
+  transform: translateY(12px);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
+}
+
+#skills-section.revealed .text li,
+#portfolio-section.revealed .text li,
+#languages-section.revealed .text li {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#skills-section .text li:nth-child(1),
+#portfolio-section .text li:nth-child(1),
+#languages-section .text li:nth-child(1) {
+  transition-delay: 0ms;
+}
+
+#skills-section .text li:nth-child(2),
+#portfolio-section .text li:nth-child(2),
+#languages-section .text li:nth-child(2) {
+  transition-delay: 30ms;
+}
+
+#skills-section .text li:nth-child(3),
+#portfolio-section .text li:nth-child(3),
+#languages-section .text li:nth-child(3) {
+  transition-delay: 60ms;
+}
+
+#skills-section .text li:nth-child(4),
+#portfolio-section .text li:nth-child(4),
+#languages-section .text li:nth-child(4) {
+  transition-delay: 90ms;
+}
+
+#skills-section .text li:nth-child(5),
+#portfolio-section .text li:nth-child(5),
+#languages-section .text li:nth-child(5) {
+  transition-delay: 120ms;
+}
+
+#skills-section .text li:nth-child(6),
+#portfolio-section .text li:nth-child(6),
+#languages-section .text li:nth-child(6) {
+  transition-delay: 150ms;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .text,
   .main-section {
     transition: none;
+  }
+
+  #skills-section .text li,
+  #portfolio-section .text li,
+  #languages-section .text li {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    transition-delay: 0ms;
   }
 
   .visual-mode-toggle {
@@ -801,7 +867,7 @@ a:hover {
   background: #0a2342cc;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
-  color: #fafafa;
+  color: var(--fg);
   font-size: 22px;
   cursor: pointer;
   display: flex;
@@ -863,7 +929,7 @@ a:hover {
 .chatbot-suggestion-btn {
   background: #4f8cff26;
   border: 1px solid #4f8cff4d;
-  color: #fafafa;
+  color: var(--fg);
   border-radius: 14px;
   padding: 5px 10px;
   font-size: 12px;
@@ -888,7 +954,7 @@ a:hover {
 .chatbot-close-btn {
   background: none;
   border: none;
-  color: #fafafa;
+  color: var(--fg);
   cursor: pointer;
   font-size: 14px;
   line-height: 1;
@@ -937,13 +1003,13 @@ a:hover {
 }
 
 .chatbot-copy-btn:hover {
-  color: #fafafa;
+  color: var(--fg);
 }
 
 .chatbot-message-user {
   align-self: flex-end;
   background: #4f8cff;
-  color: #fafafa;
+  color: var(--fg);
 }
 
 .chatbot-message-loading {
@@ -975,7 +1041,7 @@ a:hover {
   border: 1px solid #4f8cff;
   border-radius: 8px;
   font-size: 13px;
-  color: #fafafa;
+  color: var(--fg);
   text-decoration: none;
   transition: background 0.3s ease;
 }
@@ -997,7 +1063,7 @@ a:hover {
   border-radius: 8px;
   border: 1px solid #4f8cff4d;
   background: #05152b;
-  color: #fafafa;
+  color: var(--fg);
   font-size: 13px;
 }
 
@@ -1011,7 +1077,7 @@ a:hover {
   border-radius: 8px;
   border: 1px solid #4f8cff;
   background: #0a2342cc;
-  color: #fafafa;
+  color: var(--fg);
   cursor: pointer;
   font-size: 14px;
 }
