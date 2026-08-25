@@ -7,7 +7,7 @@ function AboutSection() {
 
   return (
     <section className="main-section align-right" id="about-me-section">
-      <h1>{t("about.title")}</h1>
+      <h2>{t("about.title")}</h2>
       <div className="text">
         <p className="about-summary">{t("about.summary")}</p>
         {ABOUT_LINE_KEYS.map((key) => (

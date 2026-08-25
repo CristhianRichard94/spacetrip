@@ -10,7 +10,7 @@ function LanguagesSection() {
 
   return (
     <section className="main-section align-left" id="languages-section">
-      <h1>{t("languagesSection.title")}</h1>
+      <h2>{t("languagesSection.title")}</h2>
       <div className="text">
         <ul>
           {LANGUAGES.map((entry) => (

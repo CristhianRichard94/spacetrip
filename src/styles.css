@@ -706,20 +706,23 @@ li {
   left: 20px;
 }
 
-h1 {
+h1,
+h2 {
   font-size: 48px;
   margin-bottom: 20px;
   letter-spacing: -0.02em;
 }
 
 @media (max-width: 768px) {
-  h1 {
+  h1,
+  h2 {
     align-self: center;
     width: 100%;
     text-align: center;
   }
 }
 h1,
+h2,
 p,
 ul,
 li {
