@@ -6,6 +6,11 @@ const PROJECTS = [
   { key: "futsalBooking", href: "/futsal-manager" },
   { key: "automakers", href: "/automakers" },
   { key: "spotifyCodeGen", href: "/spotify-code-gen" },
+  { key: "taskGrid", href: "https://collab-workspace-e5f91.web.app/" },
+  {
+    key: "financialAssistant",
+    href: "https://finsight-assistant.vercel.app/dashboard",
+  },
 ];
 
 const OLDER_PROJECTS = [
