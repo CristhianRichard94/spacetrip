@@ -9,6 +9,13 @@ import { useSceneModeContext } from "../../context/SceneModeContext.jsx";
 // or mounted in production builds.
 const DebugPanel = import.meta.env.DEV ? lazy(() => import("../../dev/DebugPanel.jsx")) : null;
 
+// Planet/Stars/Sun/SolarSystemScene each ship a plain and a `.enhanced`
+// variant. This is a deliberate two-tier fallback, not duplication: the
+// plain tree is the low-cost classic scene, the `.enhanced` tree adds the
+// full shader/bloom/postprocessing pipeline. Which tree mounts is decided
+// below via SceneModeContext (user toggle + auto webgl/low-end-device
+// fallback), never both at once. Keep both variants in sync when changing
+// shared visual behavior.
 function SceneRoot() {
   const {
     mode,
