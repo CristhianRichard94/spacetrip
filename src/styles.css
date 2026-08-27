@@ -30,14 +30,19 @@
   --card: #111113;
   --card-foreground: #fafafa;
 
-  --radius-sm: 0.375rem;
-  --radius-md: 0.625rem;
-  --radius-lg: 1rem;
+  --radius-xs: 0.375rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 0.875rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.25rem;
 
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
   --shadow-md: 0 4px 12px rgb(0 0 0 / 0.4);
   --shadow-lg: 0 12px 32px rgb(0 0 0 / 0.5);
-  --shadow-glow: 0 0 24px var(--accent-600);
+  --shadow-glow:
+    0 0 32px 4px #4f8cff33,
+    0 0 0 1px #4f8cff22 inset;
 }
 
 html {
@@ -60,7 +65,7 @@ html {
   left: 8px;
   z-index: 100;
   padding: 10px 16px;
-  border-radius: 6px;
+  border-radius: var(--radius-xs);
   border: 1px solid #4f8cff;
   background: #0a2342;
   color: #fafafa;
@@ -227,7 +232,7 @@ html {
   gap: 4px;
   height: 32px;
   padding: 0 10px;
-  border-radius: 16px;
+  border-radius: var(--radius-xl);
   border: 1px solid #4f8cff;
   background: #0a2342cc;
   color: var(--fg);
@@ -280,7 +285,7 @@ html {
   padding: 8px 12px;
   background: #0a2342f0;
   border: 1px solid #4f8cff;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   font-size: 13px;
   opacity: 0;
   pointer-events: none;
@@ -338,7 +343,7 @@ html {
   padding: 8px 12px;
   background: #0a2342f0;
   border: 1px solid #4f8cff;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   font-size: 13px;
   opacity: 0;
   pointer-events: none;
@@ -392,7 +397,7 @@ html {
   padding: 8px 12px;
   background: #0a2342f0;
   border: 1px solid #4f8cff;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   font-size: 13px;
   opacity: 0;
   pointer-events: none;
@@ -562,7 +567,7 @@ html {
 .text {
   background: #ffffff0d;
   border: 1px solid #ffffff1a;
-  border-radius: 16px;
+  border-radius: var(--radius-xl);
   padding: 28px 32px;
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
@@ -575,9 +580,7 @@ html {
 .main-section.in-view .text {
   background: #0a234280;
   border-color: #4f8cff66;
-  box-shadow:
-    0 0 32px 4px #4f8cff33,
-    0 0 0 1px #4f8cff22 inset;
+  box-shadow: var(--shadow-glow);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
 }
@@ -836,7 +839,7 @@ li {
   padding: 5px 10px;
   background: #0a234280;
   border: 1px solid #ffffff1a;
-  border-radius: 20px;
+  border-radius: var(--radius-2xl);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
@@ -851,7 +854,7 @@ li {
   list-style: none;
   margin: 0;
   padding: 30px;
-  border-radius: 20px;
+  border-radius: var(--radius-2xl);
   width: auto;
   gap: 0 30px;
   align-self: flex-start;
@@ -950,7 +953,7 @@ a:focus-visible {
   flex-direction: column;
   background: #0a2342f0;
   border: 1px solid #4f8cff;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   overflow: hidden;
@@ -985,7 +988,7 @@ a:focus-visible {
   background: #4f8cff26;
   border: 1px solid #4f8cff4d;
   color: var(--fg);
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
   padding: 5px 10px;
   font-size: 12px;
   cursor: pointer;
@@ -1030,7 +1033,7 @@ a:focus-visible {
   font-size: 13px;
   line-height: 1.4;
   padding: 8px 10px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   max-width: 90%;
   white-space: pre-wrap;
   word-break: break-word;
@@ -1094,7 +1097,7 @@ a:focus-visible {
   padding: 8px 10px;
   text-align: center;
   border: 1px solid #4f8cff;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   font-size: 13px;
   color: var(--fg);
   text-decoration: none;
@@ -1115,7 +1118,7 @@ a:focus-visible {
 .chatbot-input {
   flex: 1;
   padding: 8px 10px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   border: 1px solid #4f8cff4d;
   background: #05152b;
   color: var(--fg);
@@ -1129,7 +1132,7 @@ a:focus-visible {
 .chatbot-send-btn {
   width: 36px;
   height: 36px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   border: 1px solid #4f8cff;
   background: #0a2342cc;
   color: var(--fg);
