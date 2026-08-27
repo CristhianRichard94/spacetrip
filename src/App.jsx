@@ -71,10 +71,11 @@ function AppContent({ audioRef, mounted }) {
 
       {showLoader && <AppLoader exiting={sceneReady} />}
 
-      {/* deferred past first paint: 32MB file, must not compete with LCP */}
+      {/* deferred past first paint: must not compete with LCP */}
       {mounted && (
         <audio ref={audioRef} autoPlay loop muted>
-          <source src="background-music.wav" type="audio/mpeg" />
+          <source src="background-music.webm" type="audio/webm" />
+          <source src="background-music.m4a" type="audio/mp4" />
           Your browser does not support the audio element.
         </audio>
       )}
