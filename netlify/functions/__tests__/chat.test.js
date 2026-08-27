@@ -58,7 +58,7 @@ async function loadHandler() {
   // Bust vite-node's own module cache (distinct from require.cache above) so
   // each test gets a fresh top-level `store` closure variable in chat.js.
   vi.resetModules();
-  const mod = await import("./chat.js");
+  const mod = await import("../chat.js");
   return mod.handler;
 }
 

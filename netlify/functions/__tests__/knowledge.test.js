@@ -1,6 +1,6 @@
 // @vitest-environment node
 import { describe, it, expect } from "vitest";
-import { RESUME_CONTEXT } from "./knowledge.js";
+import { RESUME_CONTEXT } from "../knowledge.js";
 
 describe("knowledge RESUME_CONTEXT", () => {
   it("exports a non-empty trimmed string", () => {
