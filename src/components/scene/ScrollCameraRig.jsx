@@ -47,6 +47,10 @@ function ScrollCameraRig({ onActiveSectionChange }) {
   const debugValuesRef = useRef(debugValues);
   debugValuesRef.current = debugValues;
 
+  // Computes the camera target for a waypoint and applies it — used only
+  // where the camera actually moves: initial mount and a debug-slider
+  // change (see the effects below). The camera stays put once snapped, so
+  // this must not run on every scroll-driven section change.
   const applyWaypoint = (index) => {
     activeIndexRef.current = index;
     const waypoint = WAYPOINTS[index];
@@ -63,6 +67,14 @@ function ScrollCameraRig({ onActiveSectionChange }) {
       z + cameraOffsetZ * offsetScale
     );
     onActiveSectionChange?.(waypoint.section);
+  };
+
+  // Lighter-weight update for scroll-driven section changes: the camera no
+  // longer tracks scroll (see useFrame below), so this only needs to keep
+  // the active index and section-highlight callback in sync.
+  const setActiveSection = (index) => {
+    activeIndexRef.current = index;
+    onActiveSectionChange?.(WAYPOINTS[index].section);
   };
 
   // Re-apply the current waypoint when a debug slider changes so camera
@@ -108,7 +120,7 @@ function ScrollCameraRig({ onActiveSectionChange }) {
         if (bestId) {
           const index = WAYPOINTS.findIndex((wp) => wp.section === bestId);
           if (index !== -1 && index !== activeIndexRef.current) {
-            applyWaypoint(index);
+            setActiveSection(index);
           }
         }
       },
