@@ -60,14 +60,11 @@
     </script>
 
     <!--
-      TODO(seo): This is a client-rendered SPA (React, no SSR/prerender) — crawlers that
-      don't execute JS see an empty <div id="root">; only the static <head> tags above
-      (meta description, OG/Twitter, JSON-LD) are visible to non-JS crawlers, and they
-      don't reflect the language toggle. Dig into:
-        - Prerendering (vite-plugin-ssr, react-snap, or a Netlify prerender step) so
-          crawlers/LLM scrapers get real rendered HTML for every section.
-        - Per-language <html lang> and hreflang tags once prerendered.
-        - Verify indexing in Google Search Console after prerendering ships.
+      SEO: dist/index.html is overwritten by scripts/prerender.mjs (npm run build)
+      with fully client-rendered HTML so crawlers that don't execute JS still see
+      real content. Single route today, so <html lang> stays static; per-language
+      hreflang tags would need URL-per-language routing first — out of scope here.
+      Verify indexing in Google Search Console after this ships.
     -->
 
     <link rel="stylesheet" href="styles.css" />
