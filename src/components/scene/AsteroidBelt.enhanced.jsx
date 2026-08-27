@@ -26,8 +26,14 @@ function AsteroidBeltEnhanced({ prefersReducedMotion, lowPower }) {
     return items;
   }, [count]);
 
+  const initializedRef = useRef(false);
+
   useSafeFrame((_, delta) => {
     if (!meshRef.current) return;
+    // Positions never change once reduced motion has set the initial
+    // instance matrices, so skip rebuilding all 200 matrices every frame.
+    if (prefersReducedMotion && initializedRef.current) return;
+
     if (!prefersReducedMotion) {
       asteroids.forEach((asteroid) => {
         asteroid.angle += delta * 0.015;
@@ -45,6 +51,7 @@ function AsteroidBeltEnhanced({ prefersReducedMotion, lowPower }) {
       meshRef.current.setMatrixAt(index, dummy.matrix);
     });
     meshRef.current.instanceMatrix.needsUpdate = true;
+    initializedRef.current = true;
   });
 
   return (
