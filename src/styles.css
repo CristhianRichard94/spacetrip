@@ -38,6 +38,8 @@
   --shadow-md: 0 4px 12px rgb(0 0 0 / 0.4);
   --shadow-lg: 0 12px 32px rgb(0 0 0 / 0.5);
   --shadow-glow: 0 0 24px var(--accent-600);
+
+  --ease-brand: cubic-bezier(0.2, 0, 0, 1);
 }
 
 html {
@@ -68,7 +70,7 @@ html {
   font-weight: 600;
   text-decoration: none;
   transform: translateY(-150%);
-  transition: transform 0.15s ease;
+  transition: transform 0.15s var(--ease-brand);
 }
 
 .skip-link:focus {
@@ -178,7 +180,7 @@ html {
     -webkit-backdrop-filter: blur(8px);
     overflow-y: auto;
     transform: translateX(-100%);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s var(--ease-brand);
   }
 
   .navbar-links.open {
@@ -238,8 +240,8 @@ html {
   cursor: pointer;
   backdrop-filter: blur(4px);
   transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease;
+    background-color 0.2s var(--ease-brand),
+    border-color 0.2s var(--ease-brand);
 }
 
 .navbar-resume-link:hover {
@@ -284,7 +286,7 @@ html {
   font-size: 13px;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.4s var(--ease-brand);
 }
 
 .music-tooltip.show {
@@ -305,9 +307,9 @@ html {
   align-items: center;
   justify-content: center;
   transition:
-    background 0.15s ease,
-    transform 0.15s ease,
-    opacity 0.15s ease;
+    background 0.15s var(--ease-brand),
+    transform 0.15s var(--ease-brand),
+    opacity 0.15s var(--ease-brand);
 }
 
 .visual-mode-toggle:hover:not(:disabled) {
@@ -342,7 +344,7 @@ html {
   font-size: 13px;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.4s var(--ease-brand);
 }
 
 .visual-mode-tooltip.show {
@@ -364,9 +366,9 @@ html {
   align-items: center;
   justify-content: center;
   transition:
-    background 0.15s ease,
-    transform 0.15s ease,
-    opacity 0.15s ease;
+    background 0.15s var(--ease-brand),
+    transform 0.15s var(--ease-brand),
+    opacity 0.15s var(--ease-brand);
 }
 
 .lang-toggle:hover {
@@ -396,7 +398,7 @@ html {
   font-size: 13px;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.4s var(--ease-brand);
 }
 
 .lang-toggle-tooltip.show {
@@ -446,7 +448,7 @@ html {
   width: 100%;
   height: 50%;
   background: #0a2342;
-  transition: transform 0.7s ease;
+  transition: transform 0.7s var(--ease-brand);
 }
 
 .loader-shutter.top {
@@ -463,7 +465,7 @@ html {
   height: 3px;
   background: #4f8cff;
   transform: translateX(0%);
-  transition: transform 0.6s ease 0.1s;
+  transition: transform 0.6s var(--ease-brand) 0.1s;
 }
 
 .loader-shutter.bottom {
@@ -522,7 +524,7 @@ html {
 
 .app-loader.exiting .loader-core {
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s var(--ease-brand);
 }
 
 .loader-label {
@@ -535,7 +537,7 @@ html {
   color: #d7e3ffcc;
   font-size: 14px;
   letter-spacing: 0.04em;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s var(--ease-brand);
 }
 
 .app-loader.exiting .loader-label {
@@ -554,9 +556,9 @@ html {
   scroll-margin-top: 70px;
   scroll-snap-align: start;
   transition:
-    background 0.6s ease,
-    border-color 0.6s ease,
-    box-shadow 0.6s ease;
+    background 0.6s var(--ease-brand),
+    border-color 0.6s var(--ease-brand),
+    box-shadow 0.6s var(--ease-brand);
 }
 
 .text {
@@ -567,9 +569,9 @@ html {
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   transition:
-    background 0.6s ease,
-    border-color 0.6s ease,
-    box-shadow 0.6s ease;
+    background 0.6s var(--ease-brand),
+    border-color 0.6s var(--ease-brand),
+    box-shadow 0.6s var(--ease-brand);
 }
 
 .main-section.in-view .text {
@@ -591,8 +593,8 @@ html {
   opacity: 0;
   transform: translateY(12px);
   transition:
-    opacity 0.5s ease,
-    transform 0.5s ease;
+    opacity 0.5s var(--ease-brand),
+    transform 0.5s var(--ease-brand);
 }
 
 #skills-section.revealed .text li,
@@ -687,7 +689,7 @@ html {
   }
 
   .loader-shutter {
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s var(--ease-brand);
   }
 
   .app-loader.exiting .loader-shutter.top,
@@ -862,8 +864,8 @@ li {
   max-height: 48px;
   filter: brightness(0) invert(1);
   transition:
-    filter 0.3s ease,
-    transform 0.3s ease;
+    filter 0.3s var(--ease-brand),
+    transform 0.3s var(--ease-brand);
 }
 
 .social-media img:hover {
@@ -929,8 +931,8 @@ a:focus-visible {
   align-items: center;
   justify-content: center;
   transition:
-    background 0.12s ease,
-    transform 0.12s ease;
+    background 0.12s var(--ease-brand),
+    transform 0.12s var(--ease-brand);
 }
 
 .chatbot-toggle:hover {
@@ -1098,7 +1100,7 @@ a:focus-visible {
   font-size: 13px;
   color: var(--fg);
   text-decoration: none;
-  transition: background 0.3s ease;
+  transition: background 0.3s var(--ease-brand);
 }
 
 .chatbot-resume-link:hover {
