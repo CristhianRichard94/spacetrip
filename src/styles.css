@@ -509,15 +509,48 @@ html {
   pointer-events: none;
 }
 
-.loader-ring {
+.loader-comet {
   position: absolute;
   top: 50%;
   left: 50%;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
   border-radius: 50%;
-  border-style: solid;
-  border-color: #4f8cff33;
-  border-top-color: #4f8cff;
-  transform: translate(-50%, -50%);
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 260deg,
+    #4f8cff55 320deg,
+    #d7e3ff 355deg,
+    #ffffff 360deg
+  );
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 2px));
+  animation: loader-comet-spin 1.8s linear infinite;
+}
+
+.loader-comet::after {
+  content: "";
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  margin-left: -4px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 10px 3px #ffffffcc, 0 0 22px 8px #4f8cffaa;
+}
+
+.loader-comet.reduced-motion {
+  animation: none;
+}
+
+@keyframes loader-comet-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .app-loader.exiting .loader-core {

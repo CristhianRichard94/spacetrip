@@ -1,16 +1,13 @@
 import useTranslation from "../../hooks/useTranslation.js";
 
 const PROJECTS = [
+  { key: "financialAssistant", href: "/financial-assistant" },
+  { key: "taskGrid", href: "/task-grid" },
   { key: "aiEngineerPath", href: "/ai-engineer-path" },
   { key: "roomigos", href: "/roomigos" },
   { key: "futsalBooking", href: "/futsal-manager" },
   { key: "automakers", href: "/automakers" },
   { key: "spotifyCodeGen", href: "/spotify-code-gen" },
-  { key: "taskGrid", href: "https://collab-workspace-e5f91.web.app/" },
-  {
-    key: "financialAssistant",
-    href: "https://finsight-assistant.vercel.app/dashboard",
-  },
 ];
 
 const OLDER_PROJECTS = [
