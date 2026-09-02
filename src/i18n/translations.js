@@ -125,7 +125,7 @@ export const translations = {
         spanish: "Spanish",
       },
       levels: {
-        fluent: "Fluent",
+        fluent: "Fluent (C1, IELTS 02/2025)",
         native: "Native",
         basic: "Basic",
       },
@@ -326,7 +326,7 @@ export const translations = {
         spanish: "Español",
       },
       levels: {
-        fluent: "Avanzado",
+        fluent: "Avanzado (C1, IELTS 02/2025)",
         native: "Nativo",
         basic: "Básico",
       },
